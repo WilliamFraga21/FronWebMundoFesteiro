@@ -33,6 +33,31 @@ export default {
    <ProdutosMaisVendidoHome/>
 
   </div>
+
+  <div class="container-fluid " style="width: 90%;">
+
+    <div class="d-flex flex-wrap justify-content-around mb-5 ">
+
+      <div class="col-12 col-md-3 d-flex flex-column align-items-center m-2" style="">
+        <img src="../assets/imagens/Services.svg" alt="" class="img-fluid" style="height: 80px; width: 80px;">
+        <h5 class="m-0 text-center">ENTREGA GRATUITA E RÁPIDA</h5>
+        <p class="m-0 text-center" style="font-size: small">Entrega gratuita para todos os pedidos acima de R$ 100</p>
+      </div>
+      <div class="col-12 col-md-3 d-flex flex-column align-items-center m-2" style="">
+        <img src="../assets/imagens/Services%20(1).svg" alt="" class="img-fluid" style="height: 80px; width: 80px;">
+        <h5 class="m-0 text-center">ATENDIMENTO AO CLIENTE 24/7</h5>
+        <p class="m-0 text-center" style="font-size: small">Suporte ao cliente amigável 24/7</p>
+      </div>
+      <div class="col-12 col-md-3 d-flex flex-column align-items-center m-2" style="">
+        <img src="../assets/imagens/Services%20(2).svg" alt="" class="img-fluid" style="height: 80px; width: 80px;">
+        <h5 class="m-0 text-center">GARANTIA DE DEVOLUÇÃO DE DINHEIRO</h5>
+        <p class="m-0 text-center" style="font-size: small">Devolvemos o dinheiro em 30 dias</p>
+      </div>
+    </div>
+
+
+
+  </div>
 </template>
 
 <style scoped>
