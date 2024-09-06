@@ -2,8 +2,9 @@
 import Filtro from "@/components/Filtro.vue";
 import PromoRelampago from "@/components/PromoRelampago.vue";
 import Categorias from "@/components/Categorias.vue";
+import ProdutosMaisVendidoHome from "@/components/ProdutosMaisVendidoHome.vue";
 export default {
-  components: {Categorias, PromoRelampago, Filtro}
+  components: {ProdutosMaisVendidoHome, Categorias, PromoRelampago, Filtro}
 
 }
 </script>
@@ -24,6 +25,12 @@ export default {
   <div class="container-fluid " style="width: 90%;">
 
   <Categorias/>
+
+  </div>
+
+  <div class="container-fluid " style="width: 90%;">
+
+   <ProdutosMaisVendidoHome/>
 
   </div>
 </template>
