@@ -2,9 +2,7 @@
 export default {
   components: {  },
 
-  mounted() {
-    this.startTimer();
-  },
+
   methods: {
 
 
