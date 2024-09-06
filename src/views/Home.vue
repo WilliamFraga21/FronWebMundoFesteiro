@@ -1,19 +1,24 @@
 <script >
 import Filtro from "@/components/Filtro.vue";
 export default {
-  components: {Filtro}
+  components: { Filtro}
 
 }
 </script>
 
 <template >
-  <div class="container-fluid mt-5 " style="width: 90%;">
-    <Filtro style="max-width: 200px"/>
+  <div class="container-fluid d-flex" style="width: 90%;">
+
+    <Filtro class="" style="width: 200px;margin-bottom: 130px"/>
+
+  </div>
+
+  <div class="container-fluid d-flex" style="width: 90%;">
 
 
-
-    dwad
-
+    <div>
+      wdadwadwa
+    </div>
 
   </div>
 </template>

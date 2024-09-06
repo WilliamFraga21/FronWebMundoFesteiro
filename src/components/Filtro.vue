@@ -1,14 +1,17 @@
 <script >
+
+import CarouselHome from "@/components/CarouselHome.vue";
 export default {
+  components: {CarouselHome}
 
 }
 </script>
 
-<template>
-  <div>
-    <div class="dropdown m-1">
+<template class="">
+  <div class="border-end ">
+    <div class="dropdown m-auto mt-5 me-5" >
       <button
-          class="btn dropdown-toggle d-flex align-items-center p-0 border-0 bg-transparent text-dark"
+          class="btn dropdown-toggle d-flex align-items-center p-0 border-0 bg-transparent text-dark d-grid gap-2"
           type="button"
           id="dropdownMenuButton"
           data-bs-toggle="dropdown"
@@ -25,7 +28,7 @@ export default {
     </div>
     <div class="dropdown m-1">
       <button
-          class="btn dropdown-toggle d-flex align-items-center p-0 border-0 bg-transparent text-dark"
+          class="btn dropdown-toggle d-flex align-items-center p-0 border-0 bg-transparent text-dark d-grid gap-2"
           type="button"
           id="dropdownMenuButton"
           data-bs-toggle="dropdown"
@@ -77,7 +80,10 @@ export default {
         Utensílios
       </a>
     </div>
+
+
   </div>
+  <CarouselHome class="" style=""/>
 </template>
 
 <style scoped>
