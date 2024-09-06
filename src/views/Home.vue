@@ -1,8 +1,9 @@
 <script >
 import Filtro from "@/components/Filtro.vue";
 import PromoRelampago from "@/components/PromoRelampago.vue";
+import Categorias from "@/components/Categorias.vue";
 export default {
-  components: {PromoRelampago, Filtro}
+  components: {Categorias, PromoRelampago, Filtro}
 
 }
 </script>
@@ -18,6 +19,11 @@ export default {
 
 
    <PromoRelampago/>
+
+  </div>
+  <div class="container-fluid " style="width: 90%;">
+
+  <Categorias/>
 
   </div>
 </template>
