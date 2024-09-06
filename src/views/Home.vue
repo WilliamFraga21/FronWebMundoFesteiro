@@ -1,7 +1,8 @@
 <script >
 import Filtro from "@/components/Filtro.vue";
+import PromoRelampago from "@/components/PromoRelampago.vue";
 export default {
-  components: { Filtro}
+  components: {PromoRelampago, Filtro}
 
 }
 </script>
@@ -13,12 +14,10 @@ export default {
 
   </div>
 
-  <div class="container-fluid d-flex" style="width: 90%;">
+  <div class="container-fluid " style="width: 90%;">
 
 
-    <div>
-      wdadwadwa
-    </div>
+   <PromoRelampago/>
 
   </div>
 </template>
