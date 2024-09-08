@@ -37,14 +37,50 @@
           </div>
 
           <span class="d-flex justify-content-center align-items-center">
-          <img src="../assets/imagens/Wishlist.svg" alt="Wishlist Icon" class="img-fluid" style="height: 24px;">
-        </span>
-          <span class="d-flex justify-content-center align-items-center ms-3">
-          <img src="../assets/imagens/Cart1.svg" alt="Cart Icon" class="img-fluid" style="height: 24px;">
-        </span>
-          <span class="d-flex justify-content-center align-items-center ms-3 me-3">
-          <img src="../assets/imagens/user.svg" alt="User Icon" class="img-fluid" style="height: 24px;">
-        </span>
+            <img src="../assets/imagens/Wishlist.svg" alt="Wishlist Icon" class="img-fluid" style="height: 24px;">
+          </span>
+
+
+
+          <button class="btn d-flex justify-content-center align-items-center ms-3 position-relative" >
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill text-bg-secondary">+99 <span class="visually-hidden">unread messages</span></span>
+            <span class=""><img src="../assets/imagens/Cart1.svg" alt="User Icon" class="img-fluid" style="height: 24px;"></span>
+
+          </button>
+
+
+         <div>
+           <button class="btn dropdown-toggle d-flex justify-content-center align-items-center ms-3 me-3 " data-bs-toggle="dropdown" aria-expanded="false">
+             <span class=""><img src="../assets/imagens/user.svg" alt="User Icon" class="img-fluid" style="height: 24px;"></span>
+
+           </button>
+
+
+
+
+
+
+
+                 <ul class="dropdown-menu dropdown-menu-dark" style="background-color: rgba(0, 0, 0, 0.70)">
+                   <li><a class="dropdown-item" href="#"><img src="../assets/imagens/userBranco.svg" alt="">Gerenciar minha conta</a></li>
+                   <li><a class="dropdown-item" href="#"><img src="../assets/imagens/icon-mallbag.svg" alt=""> Meus Pedidos</a></li>
+                   <li><a class="dropdown-item" href="#"><img src="../assets/imagens/Icon-Reviews.svg" alt=""> Meus Favoritos</a></li>
+                   <li><a class="dropdown-item" href="#"><img src="../assets/imagens/Icon-logout.svg" alt=""> Sair</a></li>
+                 </ul>
+
+
+
+
+
+
+
+         </div>
+
+
+
+<!--          <span class="d-flex justify-content-center align-items-center ms-3 me-3">-->
+<!--            <img src="../assets/imagens/user.svg" alt="User Icon" class="img-fluid" style="height: 24px;">-->
+<!--          </span>-->
         </div>
       </div>
     </div>
