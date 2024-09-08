@@ -4,7 +4,7 @@ import Login from "@/views/Login/Login.vue";
 import AdminTela from "@/views/AdminTela.vue";
 import Home from "@/views/Home.vue";
 import ViewProduto from "@/views/ViewProduto.vue";
-
+import Carrinho from "@/views/Carrinho.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -32,6 +32,11 @@ const router = createRouter({
       path: '/viewproduto',
       name: 'viewProduto',
       component: ViewProduto
+    },
+    {
+      path: '/carrinho',
+      name: 'carrinho',
+      component: Carrinho
     },
 
   ]
