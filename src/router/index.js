@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Cadastro from "@/views/Login/Cadastro.vue";
 import Login from "@/views/Login/Login.vue";
-import AdminTela from "@/views/AdminTela.vue";
+import EditePerfil from "@/views/EditePerfil.vue";
 import Home from "@/views/Home.vue";
 import ViewProduto from "@/views/ViewProduto.vue";
 import Carrinho from "@/views/Carrinho.vue";
@@ -24,9 +24,9 @@ const router = createRouter({
       component: Login
     },
     {
-      path: '/admin',
-      name: 'admnin',
-      component: AdminTela
+      path: '/editeperfil',
+      name: 'editeperfil',
+      component: EditePerfil
     },
     {
       path: '/viewproduto',
