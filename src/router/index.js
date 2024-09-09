@@ -7,6 +7,7 @@ import ViewProduto from "@/views/ViewProduto.vue";
 import Carrinho from "@/views/Carrinho.vue";
 import CriarProduto from "@/views/Admin/CriarProduto.vue";
 import MeuPerfil from "@/views/MinhaConta/MeuPerfil.vue";
+import CriarCategoriaTamanho from "@/views/Admin/CriarCategoriaTamanho.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -44,6 +45,11 @@ const router = createRouter({
       path: '/adminCreateProduto',
       name: 'adminCreateProduto',
       component: CriarProduto
+    },
+    {
+      path: '/adminCreatecategoria',
+      name: 'adminCreatecategoria',
+      component: CriarCategoriaTamanho
     },
 
   ]
