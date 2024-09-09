@@ -2,74 +2,119 @@
 
 export default {
 
-}
-
+};
 
 </script>
 
 <template>
 
-  <div>
+  <div class="container-fluid">
     <div>
-      <p class="m-0">
+      <p class="m-0 fw-bold text-danger">
         Cria Produto
       </p>
     </div>
+    <div class="">
 
-    <div>
-      <div class="row g-3">
-        <div class="col">
-          <input type="text" class="form-control" placeholder="Primeiro Nome" aria-label="First name">
+
+      <div class="">
+
+
+        <div class="row g-3">
+          <div class="col">
+            <input type="text" class="form-control" placeholder="Nome do Produto" aria-label="First name">
+          </div>
+          <div class="col">
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+          </div>
         </div>
-        <div class="col">
-          <input type="text" class="form-control" placeholder="Último Nome" aria-label="Last name">
-        </div>
+
       </div>
+
+      <div class="">
+        <label for="inputState" class="form-label">Categoria</label>
+        <select id="inputState" class="form-select">
+          <option selected>Categorias</option>
+          <option>...</option>
+        </select>
+      </div>
+
+
+
+        <div class="mt-2">
+          <label for="inputState" class="form-label">SubCategoria</label>
+          <select id="inputState" class="form-select">
+            <option selected>SubCategorias</option>
+            <option>...</option>
+          </select>
+        </div>
+
+
+        <div class=" d-flex justify-content-end mt-3">
+          <button type="submit" class="btn btn-primary me-5 ">Criar</button>
+        </div>
+
 
     </div>
 
 
 
-    <div>
-      <form class="row g-3 mt-1">
-        <div class="col-md-6">
-          <label for="inputEmail4" class="form-label">Email</label>
-          <input type="email" class="form-control" id="inputEmail4">
-        </div>
-        <div class="col-md-6">
-          <label for="inputPassword4" class="form-label">Password</label>
-          <input type="password" class="form-control" id="inputPassword4">
-        </div>
-        <div class="col-md-6">
-          <label for="inputPassword4" class="form-label">Password</label>
-          <input type="password" class="form-control" id="inputPassword4">
-        </div>
-        <div class="col-12">
-          <label for="inputAddress" class="form-label">CEP</label>
-          <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-        </div>
-        <div class="col-12">
-          <label for="inputAddress2" class="form-label">Rua</label>
-          <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-        </div>
-        <div class="col-md-6">
-          <label for="inputCity" class="form-label">Cidade</label>
-          <input type="text" class="form-control" id="inputCity">
-        </div>
-        <div class="col-md-4">
-          <label for="inputCity" class="form-label">Estado</label>
-          <input type="text" class="form-control" id="inputCity">
+    <div class=" mt-4">
+
+
+      <div>
+        <p class="m-0 fw-bold text-danger">
+          Cria Produto Variação
+        </p>
+      </div>
+
+      <div class="col-md-4 mt-2">
+        <label for="inputState" class="form-label">Selecione o Produto:</label>
+        <select id="inputState" class="form-select custom-select">
+          <option selected>Produtos</option>
+          <option > Brigadeiro</option>
+          <option > Brigadeiro</option>
+          <option > Brigadeiro</option>
+          <option > Brigadeiro</option>
+          <option > Brigadeiro</option>
+          <option > Brigadeiro</option>
+
+
+        </select>
+      </div>
+
+      <div class="row g-3 mt-1">
+
+
+
+
+        <div class="col">
+          <label for="inputState" class="form-label">Tamanho</label>
+          <select id="inputState" class="form-select">
+            <option selected>Tamanho</option>
+            <option>...</option>
+          </select>
         </div>
 
-        <div class="col-md-2">
-          <label for="inputZip" class="form-label">Bairro</label>
-          <input type="text" class="form-control" id="inputZip">
+        <div class="col">
+          <label for="inputState" class="form-label">Cor</label>
+          <select id="inputState" class="form-select">
+            <option selected>Cores</option>
+            <option>...</option>
+          </select>
         </div>
 
-        <div class="col-12 d-flex justify-content-end ">
-          <button type="submit" class="btn btn-danger me-5 ">Salvar Alterações</button>
+        <div class="col">
+          <label for="Estoque" class="form-label">Quantidade em Estoque:</label>
+          <input type="number" class="form-control" id="Estoque">
         </div>
-      </form>
+
+
+      </div>
+      <div class=" d-flex justify-content-end mt-3">
+        <button type="submit" class="btn btn-primary me-5 ">Criar</button>
+      </div>
+
     </div>
 
 
@@ -78,5 +123,6 @@ export default {
 </template>
 
 <style scoped>
+
 
 </style>
