@@ -22,16 +22,16 @@ export default {
 
       <li class="list-group-item fw-bold text-center text-md-start">Cadastros</li>
       <ul class="list-group list-group-flush ps-0">
-        <li class="list-group-item ms-3 text-body-tertiary"><a class="nav-link p-0" href="#">Criar Categoria</a></li>
-        <li class="list-group-item ms-3 text-body-tertiary"><a class="nav-link p-0" href="#">Criar Subcategoria</a></li>
+        <li class="list-group-item ms-3 text-body-tertiary"><a class="nav-link p-0" href="#">Criar Sub/Categoria</a></li>
+        <li class="list-group-item ms-3 text-body-tertiary"><a class="nav-link p-0" href="#">Editar Produtos</a></li>
         <li class="list-group-item ms-3 text-body-tertiary"><a class="nav-link p-0" href="#">Inserir Produto</a></li>
       </ul>
 
-      <li class="list-group-item fw-bold text-center text-md-start">Gerenciar Site</li>
-      <ul class="list-group list-group-flush ps-0">
-        <li class="list-group-item ms-3 text-body-tertiary"><a class="nav-link p-0" href="#">Produtos</a></li>
-        <li class="list-group-item ms-3 text-body-tertiary"><a class="nav-link p-0" href="#">Usuários Logados</a></li>
-      </ul>
+<!--      <li class="list-group-item fw-bold text-center text-md-start">Gerenciar Site</li>-->
+<!--      <ul class="list-group list-group-flush ps-0">-->
+<!--        <li class="list-group-item ms-3 text-body-tertiary"><a class="nav-link p-0" href="#">Produtos</a></li>-->
+<!--        <li class="list-group-item ms-3 text-body-tertiary"><a class="nav-link p-0" href="#">Usuários Logados</a></li>-->
+<!--      </ul>-->
     </ul>
   </div>
 
