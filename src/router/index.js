@@ -1,10 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Cadastro from "@/views/Login/Cadastro.vue";
 import Login from "@/views/Login/Login.vue";
-import EditePerfil from "@/views/EditePerfil.vue";
+
 import Home from "@/views/Home.vue";
 import ViewProduto from "@/views/ViewProduto.vue";
 import Carrinho from "@/views/Carrinho.vue";
+import CriarProduto from "@/views/Admin/CriarProduto.vue";
+import MeuPerfil from "@/views/MinhaConta/MeuPerfil.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -24,9 +26,9 @@ const router = createRouter({
       component: Login
     },
     {
-      path: '/editeperfil',
-      name: 'editeperfil',
-      component: EditePerfil
+      path: '/minhaconta',
+      name: 'minhaconta',
+      component: MeuPerfil
     },
     {
       path: '/viewproduto',
@@ -37,6 +39,11 @@ const router = createRouter({
       path: '/carrinho',
       name: 'carrinho',
       component: Carrinho
+    },
+    {
+      path: '/adminCreateProduto',
+      name: 'adminCreateProduto',
+      component: CriarProduto
     },
 
   ]

@@ -12,7 +12,7 @@ export default {
   <div>
     <div>
       <p class="m-0">
-        Editar seu Perfil
+        Cria Produto
       </p>
     </div>
 

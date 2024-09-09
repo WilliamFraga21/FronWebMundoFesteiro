@@ -1,9 +1,9 @@
 <script >
-import MenuAdmin from "@/components/MenuAdmin.vue";
-import HeraderAdmin from "@/components/HeraderAdmin.vue";
 import EditPerfil from "@/components/EditPerfil.vue";
+import HeaderMinhaConta from "@/components/HeaderMinhaConta.vue";
+import MenuMinhaConta from "@/components/MenuMinhaConta.vue";
 export default {
-  components: {EditPerfil, HeraderAdmin, MenuAdmin}
+  components: {MenuMinhaConta, HeaderMinhaConta, EditPerfil}
 
 }
 </script>
@@ -12,14 +12,14 @@ export default {
 
 
   <div class="container-fluid d-flex"  style="width: 90%">
-  <HeraderAdmin/>
+    <HeaderMinhaConta/>
   </div>
 
   <div class="container-fluid d-flex"  style="width: 90%">
 
     <div class="" style="max-width: 350px">
 
-      <MenuAdmin/>
+      <MenuMinhaConta/>
     </div>
     <div class="container-fluid d-flex"  style="width: 90%">
       <EditPerfil/>
