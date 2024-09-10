@@ -9,6 +9,7 @@ import CriarProduto from "@/views/Admin/CriarProduto.vue";
 import MeuPerfil from "@/views/MinhaConta/MeuPerfil.vue";
 import CriarCategoriaTamanho from "@/views/Admin/CriarCategoriaTamanho.vue";
 import EditarProduto from "@/views/Admin/EditarProduto.vue";
+import PedidosHoje from "@/views/Admin/PedidosHoje.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -56,6 +57,11 @@ const router = createRouter({
       path: '/adminEditProduto',
       name: 'adminEditProduto',
       component: EditarProduto
+    },
+    {
+      path: '/adminPedidosHoje',
+      name: 'adminPedidosHoje',
+      component: PedidosHoje
     },
 
   ]
