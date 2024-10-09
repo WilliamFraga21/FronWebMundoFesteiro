@@ -1,4 +1,4 @@
-
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="d-flex">
     <img src="../../assets/imagens/Side%20Image.svg" alt="">

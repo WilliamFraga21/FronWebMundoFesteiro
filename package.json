@@ -15,7 +15,6 @@
     "@popperjs/core": "^2.11.8",
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
-    "bootstrap-vue": "^1.5.1",
     "bootstrap-vue-3": "^0.3.12",
     "vue": "^3.4.29",
     "vue-router": "^4.3.3",
