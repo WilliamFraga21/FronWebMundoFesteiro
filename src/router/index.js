@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Cadastro from "@/views/Login/Cadastro.vue";
-import Login from "@/views/Login/Login.vue";
+import Cadastro from "@/views/Login/CadastroComponent.vue";
+import Login from "@/views/Login/LoginComponent.vue";
 
 import Home from "@/views/Home.vue";
 import ViewProduto from "@/views/ViewProduto.vue";
