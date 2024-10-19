@@ -17,6 +17,7 @@
     "bootstrap": "^5.3.3",
     "bootstrap-vue-3": "^0.3.12",
     "vue": "^3.4.29",
+    "vue-multiselect": "^3.1.0",
     "vue-router": "^4.3.3",
     "vuex": "^4.0.2",
     "vuex-persistedstate": "^4.1.0"
