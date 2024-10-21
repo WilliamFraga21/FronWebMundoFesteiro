@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Cadastro from "@/views/Login/CadastroComponent.vue";
 import Login from "@/views/Login/LoginComponent.vue";
 
-import Home from "@/views/Home.vue";
+import HomePage from "@/views/HomePage.vue";
 import ViewProduto from "@/views/ViewProduto.vue";
 import Carrinho from "@/views/Carrinho.vue";
 import CriarProduto from "@/views/Admin/CriarProduto.vue";
@@ -17,7 +17,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: HomePage
     },
     {
       path: '/cadastro',
