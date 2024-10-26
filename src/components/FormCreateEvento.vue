@@ -47,10 +47,6 @@ export default {
     };
   },
 
-  async mounted() {
-    await this.getprofessions()
-  },
-
   watch: {
     cep(newCep) {
       if (newCep.length < 8) {
@@ -62,11 +58,15 @@ export default {
     }
   },
 
+  async mounted() {
+    await this.getprofessions()
+  },
+
 
   methods: {
 
     ...mapActions([
-    "CriarEvento", "clearAddressData","getProfessions"]),
+      "CriarEvento", "clearAddressData","getProfessions"]),
     ...mapGetters(["GetProfessions"]),
 
     async getprofessions() {
@@ -173,7 +173,7 @@ export default {
     </div>
     <div class="">
 
-<!--{{this.store.getters.GetProfessions}}-->
+      <!--{{this.store.getters.GetProfessions}}-->
       <div class="">
 
 
@@ -228,23 +228,23 @@ export default {
 
       </div>
 
-<!--      <div class="">-->
-<!--        <label for="inputState" class="form-label">Categoria</label>-->
-<!--        <select id="inputState" class="form-select">-->
-<!--          <option selected>Categorias</option>-->
-<!--          <option>...</option>-->
-<!--        </select>-->
-<!--      </div>-->
+      <!--      <div class="">-->
+      <!--        <label for="inputState" class="form-label">Categoria</label>-->
+      <!--        <select id="inputState" class="form-select">-->
+      <!--          <option selected>Categorias</option>-->
+      <!--          <option>...</option>-->
+      <!--        </select>-->
+      <!--      </div>-->
 
 
 
-<!--      <div class="mt-2">-->
-<!--        <label for="inputState" class="form-label">SubCategoria</label>-->
-<!--        <select id="inputState" class="form-select">-->
-<!--          <option selected>SubCategorias</option>-->
-<!--          <option>...</option>-->
-<!--        </select>-->
-<!--      </div>-->
+      <!--      <div class="mt-2">-->
+      <!--        <label for="inputState" class="form-label">SubCategoria</label>-->
+      <!--        <select id="inputState" class="form-select">-->
+      <!--          <option selected>SubCategorias</option>-->
+      <!--          <option>...</option>-->
+      <!--        </select>-->
+      <!--      </div>-->
 
 
 
@@ -270,17 +270,17 @@ export default {
           <div class="form-group form-control">
             <label for="professionSelect">Selecione Profissões:</label>
             <multiselect class=""
-                v-model="selectedProfessions"
-                :options="store.getters.GetProfessions"
-                :multiple="true"
-                :close-on-select="false"
-                :clear-on-select="false"
-                :preserve-search="true"
-                placeholder="Click para esolher uma profissão"
-                label="text"
-                track-by="value"
-                @select="addProfession"
-                @remove="removeProfession"
+                         v-model="selectedProfessions"
+                         :options="store.getters.GetProfessions"
+                         :multiple="true"
+                         :close-on-select="false"
+                         :clear-on-select="false"
+                         :preserve-search="true"
+                         placeholder="Click para esolher uma profissão"
+                         label="text"
+                         track-by="value"
+                         @select="addProfession"
+                         @remove="removeProfession"
             >
               <!-- Customização de opções (ícone + texto) -->
               <template v-slot:option="{ option }" >
