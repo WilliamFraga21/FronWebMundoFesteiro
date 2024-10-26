@@ -109,31 +109,15 @@ export default {
     },
 
 
-    getProfessionsWithIdAndQuantity() {
-      return this.userData.selectedProfessionsWithQuantity.map(profession => ({
-        id: profession.value, // 'value' agora será 'id'
-        quantidade: profession.quantidade
-      }));
-    },
 
 
 
 
     async criarevento() {
-      console.log(this.store.getters.GetProfessions)
-      const professionsFormatted = this.getProfessionsWithIdAndQuantity();
-
-      // Atualiza userData com o formato desejado para as profissões
-      const dataToSend = {
-        ...this.userData,
-        selectedProfessionsWithQuantity: professionsFormatted
-      };
-
-
 
       try {
         // Envia a ação CriarEvento com os dados formatados
-        await this.$store.dispatch("CriarEvento", dataToSend);
+        await this.$store.dispatch("CriarEvento", this.userData);
 
         console.log('Evento criado com sucesso!');
         // Aqui você pode adicionar qualquer ação a ser realizada após o sucesso, como redirecionar ou limpar os campos
