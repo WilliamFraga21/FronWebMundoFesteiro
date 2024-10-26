@@ -137,128 +137,75 @@ export default {
         </p>
       </div>
 
-      <div class="col-md-4 mt-2">
-        <label for="inputState" class="form-label">Selecione a Profissão:</label>
-        <select id="inputState" class="form-select custom-select">
-          <option selected>Profissoes</option>
-          <option > Brigadeiro</option>
-          <option > Brigadeiro</option>
-          <option > Brigadeiro</option>
-          <option > Brigadeiro</option>
-          <option > Brigadeiro</option>
-
-
-        </select>
-      </div>
-
 
       <div>
 
-        <div>
-          <p class="m-0">
-            Profissão
-          </p>
+        <div class=" mt-4 d-flex justify-content-start">
+          <!-- Multiselect -->
+          <div class="form-group ">
+            <label for="professionSelect">Selecione Profissões:</label>
+            <multiselect
+                v-model="selectedProfessions"
+                :options="professions"
+                :multiple="true"
+                :close-on-select="false"
+                :clear-on-select="false"
+                :preserve-search="true"
+                placeholder="Click para esolher uma profissão"
+                label="text"
+                track-by="value"
+                @select="addProfession"
+                @remove="removeProfession"
+            >
+              <!-- Customização de opções (ícone + texto) -->
+              <template v-slot:option="{ option }">
+                <div class="d-flex align-items-center">
+                  <img :src="option.icon" alt="icon" class="icon-image mr-2" />
+                  <span>{{ option.text }}</span>
+                </div>
+              </template>
 
-        </div>
-
-        <div>
-
-        </div>
-
-
-
-
-      </div>
-
-
-
-
-      <div class="container mt-4">
-        <!-- Multiselect -->
-        <div class="form-group">
-          <label for="professionSelect">Selecione Profissões:</label>
-          <multiselect
-              v-model="selectedProfessions"
-              :options="professions"
-              :multiple="true"
-              :close-on-select="false"
-              :clear-on-select="false"
-              :preserve-search="true"
-              placeholder="Escolha uma profissão"
-              label="text"
-              track-by="value"
-              @select="addProfession"
-              @remove="removeProfession"
-          >
-            <!-- Customização de opções (ícone + texto) -->
-            <template v-slot:option="{ option }">
-              <div class="d-flex align-items-center">
-                <img :src="option.icon" alt="icon" class="icon-image mr-2" />
-                <span>{{ option.text }}</span>
-              </div>
-            </template>
-
-            <!-- Customização de tags selecionadas (ícone + texto) -->
-            <template v-slot:tag="{ option, remove }">
+              <!-- Customização de tags selecionadas (ícone + texto) -->
+              <template v-slot:tag="{ option, remove }">
           <span class="custom__tag">
             <img :src="option.icon" alt="icon" class="icon-image mr-1" />
             {{ option.text }}
             <span @click="remove(option)" class="custom__remove">&times;</span>
           </span>
-            </template>
-          </multiselect>
-        </div>
+              </template>
+            </multiselect>
+          </div>
 
-        <!-- Campos de profissões selecionadas -->
-        <div v-if="selectedProfessionsWithQuantity.length > 0" class="mt-4">
-          <h5>Profissões Selecionadas:</h5>
-          <div v-for="(item, index) in selectedProfessionsWithQuantity" :key="index" class="mb-3 p-3 border rounded">
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="d-flex align-items-center">
-                <img :src="item.icon" alt="icon" class="icon-image mr-2" />
-                <strong>{{ item.text }}</strong>
+          <!-- Campos de profissões selecionadas -->
+          <div v-if="selectedProfessionsWithQuantity.length > 0" class="mt-4">
+            <h5>Profissões Selecionadas:</h5>
+            <div v-for="(item, index) in selectedProfessionsWithQuantity" :key="index" class="mb-3 p-3 border rounded">
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                  <img :src="item.icon" alt="icon" class="icon-image mr-2" />
+                  <strong>{{ item.text }}</strong>
+                </div>
+                <div>
+                  <button @click="decreaseQuantity(item)" class="btn btn-outline-danger btn-sm">-</button>
+                  <span class="mx-2">{{ item.quantity }}</span>
+                  <button @click="increaseQuantity(item)" class="btn btn-outline-success btn-sm">+</button>
+                </div>
+                <button @click="removeProfessionByIndex(index)" class="btn btn-outline-danger btn-sm">Remover</button>
               </div>
-              <div>
-                <button @click="decreaseQuantity(item)" class="btn btn-outline-danger btn-sm">-</button>
-                <span class="mx-2">{{ item.quantity }}</span>
-                <button @click="increaseQuantity(item)" class="btn btn-outline-success btn-sm">+</button>
-              </div>
-              <button @click="removeProfessionByIndex(index)" class="btn btn-outline-danger btn-sm">Remover</button>
             </div>
           </div>
         </div>
-      </div>
-
-
-      <div class="row g-3 mt-1">
-
-
-
-
-        <div class="col">
-          <label for="inputState" class="form-label">Tamanho</label>
-          <select id="inputState" class="form-select">
-            <option selected>Tamanho</option>
-            <option>...</option>
-          </select>
-        </div>
-
-        <div class="col">
-          <label for="inputState" class="form-label">Cor</label>
-          <select id="inputState" class="form-select">
-            <option selected>Cores</option>
-            <option>...</option>
-          </select>
-        </div>
-
-        <div class="col">
-          <label for="Estoque" class="form-label">Quantidade em Estoque:</label>
-          <input type="number" class="form-control" id="Estoque">
-        </div>
-
 
       </div>
-      <div class=" d-flex justify-content-end mt-3">
+
+
+
+
+
+
+
+
+      <div class=" d-flex justify-content-end mt-5 mb-5">
         <button type="submit" class="btn btn-primary me-5 ">Criar</button>
       </div>
 
