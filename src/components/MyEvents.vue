@@ -3,8 +3,40 @@
 import HeraderAdminEvento from "@/components/HeraderAdminEvento.vue";
 import MenuEvento from "@/components/MenuEvento.vue";
 import CardEvents from "@/components/CardEvents.vue";
+import ModalEditEvent from "@/components/ModalEditEvent.vue";
+import store from "@/store/store.js";
+import {mapActions, mapGetters} from "vuex";
+
 export default {
-  components: {CardEvents, MenuEvento, HeraderAdminEvento}
+  components: {CardEvents, MenuEvento, HeraderAdminEvento,ModalEditEvent},
+
+
+
+  computed:{
+    store(){
+      return store;
+    }
+  },
+
+  async mounted() {
+    await this.geteventos()
+  },
+
+  methods:{
+
+    ...mapActions([
+      "clearAddressData","getProfessions","getEventosMe"]),
+    ...mapGetters(["GetProfessions","GetMyEventos"]),
+
+    async geteventos() {
+      try {
+        return await this.getEventosMe();
+      } catch (error) {
+        console.log(error)
+      }
+    },
+
+  },
 
 }
 </script>
@@ -23,12 +55,8 @@ export default {
       <MenuEvento/>
     </div>
     <div class="container-fluid d-flex align-content-start flex-wrap"  style="width: 90%">
-      <CardEvents/>
-      <CardEvents/>
-      <CardEvents/>
-      <CardEvents/>
-      <CardEvents/>
-      <CardEvents/>
+
+      <CardEvents v-for="(item, index) in store.getters.GetMyEventos" :key="index" :data="item"/>
     </div>
   </div>
 </template>

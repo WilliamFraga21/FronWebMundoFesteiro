@@ -1,10 +1,48 @@
 <script >
 import Multiselect from 'vue-multiselect';
+import {mapActions, mapGetters} from "vuex";
+import store from "@/store/store.js";
 
 export default {
   components: { Multiselect },
+  props:{
+    datamodal: Array,
+    id: String
+  },
+
+
+  computed: {
+    store() {
+      return store;
+    }
+  },
   data() {
     return {
+
+      errorMessage: null,
+      erroIf: false,
+      passwordError: null,
+      cepError: null, // Novo estado para erros de CEP
+      userData: {
+        nameEvent: "dwadwadwadwada",
+        data: "",
+        tipoEvento: "",
+        quantidadeConvidados: null,
+        quantidadeFuncionarios: null,
+        statusEvento: 'ativo',
+        endereco: "",
+        bairro: "",
+        cidade: "",
+        estado: "",
+        descricao: "",
+        selectedProfessionsWithQuantity: []
+
+      },
+      cep: "",
+      termsAccepted: false,
+
+
+
 
       selectedProfessions: [],
       professions: [
@@ -16,43 +54,146 @@ export default {
       selectedProfessionsWithQuantity: []
     };
   },
+
+  watch: {
+    cep(newCep) {
+      if (newCep.length < 8) {
+        this.clearAddressFields();
+        this.cepError = "O CEP deve ter 8 dígitos.";
+      } else if (newCep.length === 8) {
+        this.handleCep();
+      }
+    }
+  },
+
+
+  async mounted() {
+    await this.getprofessions()
+
+    this.userData.nameEvent = this.datamodal.evento.nomeEvento;
+    this.userData.data = this.datamodal.evento.data;
+    this.userData.tipoEvento = this.datamodal.evento.tipoEvento;
+    this.userData.quantidadeConvidados = this.datamodal.evento.quantidadePessoas;
+    this.userData.quantidadeFuncionarios = this.datamodal.evento.quantidadeFuncionarios;
+    this.userData.statusEvento = this.datamodal.evento.statusEvento;
+    this.userData.endereco = this.datamodal.localidadeEvento.endereco;
+    this.userData.bairro = this.datamodal.localidadeEvento.bairro;
+    this.userData.cidade = this.datamodal.localidadeEvento.cidade;
+    this.userData.estado = this.datamodal.localidadeEvento.estado;
+    this.userData.descricao = this.datamodal.evento.descricaoEvento;
+
+    const dadosAtualizados = this.datamodal.profissao.map(item => ({
+      name: item.profissao,          // Renomeia "profissao" para "name"
+      id: item.profissao_id,
+      quantidade: item.quantidade,
+      iconURL: item.iconURL
+    }));
+console.log(dadosAtualizados)
+    this.userData.selectedProfessionsWithQuantity = dadosAtualizados;
+
+  // for (let i = 1; i<dadosAtualizados.length; i++){
+  //   this.addProfession(dadosAtualizados[i]);
+  // }
+
+
+
+  },
+
+
   methods: {
+    ...mapActions([
+      "CriarEvento", "clearAddressData","getProfessions"]),
+    ...mapGetters(["GetProfessions"]),
+
+
+
+
+
+
+
+    async getprofessions() {
+      try {
+        return await this.getProfessions();
+      } catch (error) {
+        console.log(error)
+      }
+    },
+
+
+
+    async handleCep() {
+      if (this.cep.length === 8) {
+        try {
+          const response = await fetch(`https://viacep.com.br/ws/${this.cep}/json/`);
+          const data = await response.json();
+          if (data.erro) {
+            this.clearAddressFields();
+            this.cepError = "CEP inválido."; // Define o erro de CEP inválido
+          } else {
+            this.cepError = null; // Limpa a mensagem de erro se o CEP for válido
+            this.userData.estado = data.uf;
+            this.userData.cidade = data.localidade;
+            this.userData.bairro = data.bairro;
+            this.userData.endereco = data.logradouro;
+          }
+        } catch (error) {
+          console.error("Erro ao buscar o CEP:", error);
+          this.cepError = "Erro ao buscar o CEP. Tente novamente.";
+        }
+      }
+    },
+    clearAddressFields() {
+      this.userData.estado = "";
+      this.userData.cidade = "";
+      this.userData.bairro = "";
+      this.userData.endereco = "";
+    },
+
+
+
+
+
+
+
+
+
+
     addProfession(profession) {
-      const existing = this.selectedProfessionsWithQuantity.find(
-          item => item.value === profession.value
+      const existing = this.userData.selectedProfessionsWithQuantity.find(
+          item => item.id === profession.id
       );
       if (!existing) {
-        this.selectedProfessionsWithQuantity.push({
+        this.userData.selectedProfessionsWithQuantity.push({
           ...profession,
-          quantity: 1
+          quantidade: 1
         });
       }
     },
     increaseQuantity(item) {
-      item.quantity++;
+      item.quantidade++;
     },
     decreaseQuantity(item) {
-      if (item.quantity > 1) {
-        item.quantity--;
+      if (item.quantidade > 1) {
+        item.quantidade--;
       }
     },
     removeProfession(profession) {
-      const index = this.selectedProfessionsWithQuantity.findIndex(
-          item => item.value === profession.value
+      const index = this.userData.selectedProfessionsWithQuantity.findIndex(
+          item => item.id === profession.id
       );
       if (index !== -1) {
-        this.selectedProfessionsWithQuantity.splice(index, 1);
+        this.userData.selectedProfessionsWithQuantity.splice(index, 1);
       }
     },
     removeProfessionByIndex(index) {
-      this.selectedProfessionsWithQuantity.splice(index, 1);
+      this.userData.selectedProfessionsWithQuantity.splice(index, 1);
     }
   }
 };
 </script>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <template>
-  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal fade" :id="'staticBackdrop'+id" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -62,12 +203,13 @@ export default {
         <div class="modal-body">
           <div class="">
 
-
+{{datamodal}}
             <div class="row g-3 mt-1">
-              <div class="d-flex flex-wrap">
-                <input type="text" class="form-control ms-1 me-1 mt-1" placeholder="Nome do Evento" aria-label="First name">
-                <input type="number" class="form-control ms-1 me-1 mt-1" placeholder="Quantidade de convidados" aria-label="First name">
-                <input type="date" class="form-control ms-1 me-1 mt-1" placeholder="Data do Evento" aria-label="First name">
+              <div class="d-flex">
+                <input type="text" class="form-control ms-1 me-1" placeholder="Nome do Evento" aria-label="First name" id="nameEvent" required v-model="userData.nameEvent" >
+                <input type="number" class="form-control ms-1 me-1" placeholder="Quantidade de convidados" aria-label="First name" id="quantidadeConvidados" required v-model="userData.quantidadeConvidados">
+                <input type="number" class="form-control ms-1 me-1" placeholder="Quantidade de funcionarios" aria-label="First name" id="quantidadeFuncionarios" required v-model="userData.quantidadeFuncionarios">
+                <input type="date" class="form-control ms-1 me-1" placeholder="Data do Evento" aria-label="First name" id="data" required v-model="userData.data">
               </div>
 
             </div>
@@ -76,22 +218,33 @@ export default {
 
             <div class="row g-3 mt-1" style="max-width: 400px">
               <div class="col">
-                <input type="text" class="form-control mt-1" placeholder="CEP" aria-label="First name" >
-                <input type="text" class="form-control mt-1" placeholder="Cidade" aria-label="First name">
-                <input type="text" class="form-control mt-1" placeholder="Estado" aria-label="First name">
-                <input type="text" class="form-control mt-1" placeholder="Bairro" aria-label="First name">
-                <input type="text" class="form-control mt-1" placeholder="Rua" aria-label="First name">
-                <input type="text" class="form-control mt-1" placeholder="Numero" aria-label="First name">
-                <input type="text" class="form-control mt-1" placeholder="Complemento" aria-label="First name">
+                <input type="text" class="form-control mt-1" placeholder="CEP: 00000000" aria-label="First name" id="cep" required v-model="cep" @input="handleCep">
+                <div v-if="cepError" class="text-danger">{{ cepError }}</div> <!-- Exibe o erro de CEP -->
+
+                <input type="text" class="form-control mt-1" placeholder="Cidade" aria-label="First name" id="cidade"  required v-model="userData.cidade">
+                <input type="text" class="form-control mt-1" placeholder="Estado" aria-label="First name" id="estado"  required v-model="userData.estado">
+                <input type="text" class="form-control mt-1" placeholder="Bairro" aria-label="First name" id="bairro" required v-model="userData.bairro">
+                <input type="text" class="form-control mt-1" placeholder="Rua" aria-label="First name"  id="endereco"  required v-model="userData.endereco">
               </div>
 
+            </div>
+
+
+            <div class="mt-3">
+
+              <select class="form-select" aria-label="Default select example" v-model="userData.tipoEvento">
+                <option disabled value="">Tipo do Evento</option>
+                <option value="festa">festa</option>
+                <option value="baile">baile</option>
+                <option value="casamento">casamento</option>
+              </select>
             </div>
 
 
             <div class="row g-3 mt-1">
               <div class="">
                 <label class="">Descrição do evento</label>
-                <textarea class="form-control mt-1" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <textarea class="form-control mt-1" id="exampleFormControlTextarea1" rows="3" required v-model="userData.descricao"></textarea>
 
 
               </div>
@@ -116,34 +269,34 @@ export default {
 
               <div class=" mt-4 d-flex justify-content-start flex-wrap">
                 <!-- Multiselect -->
-                <div class=" form-group m-2">
+                <div class=" form-group m-2 form-control">
                   <label for="professionSelect">Selecione Profissões:</label>
                   <multiselect
                       v-model="selectedProfessions"
-                      :options="professions"
+                      :options="store.getters.GetProfessions"
                       :multiple="true"
                       :close-on-select="false"
                       :clear-on-select="false"
                       :preserve-search="true"
                       placeholder="Click para esolher uma profissão"
-                      label="text"
-                      track-by="value"
+                      label="name"
+                      track-by="id"
                       @select="addProfession"
                       @remove="removeProfession"
                   >
                     <!-- Customização de opções (ícone + texto) -->
                     <template v-slot:option="{ option }">
                       <div class="d-flex align-items-center">
-                        <img :src="option.icon" alt="icon" class="icon-image mr-2" />
-                        <span>{{ option.text }}</span>
+                        <img :src="option.iconURL" alt="icon" class="icon-image mr-2" />
+                        <span>{{ option.name }}</span>
                       </div>
                     </template>
 
                     <!-- Customização de tags selecionadas (ícone + texto) -->
                     <template v-slot:tag="{ option, remove }">
                       <span class="custom__tag">
-                        <img :src="option.icon" alt="icon" class="icon-image mr-1" />
-                        {{ option.text }}
+                        <img :src="option.iconURL" alt="icon" class="icon-image mr-1" />
+                        {{ option.name }}
                         <span @click="remove(option)" class="custom__remove">&times;</span>
                       </span>
                     </template>
@@ -151,17 +304,17 @@ export default {
                 </div>
 
                 <!-- Campos de profissões selecionadas -->
-                <div v-if="selectedProfessionsWithQuantity.length > 0" class="mt-4">
+                <div v-if="userData.selectedProfessionsWithQuantity.length > 0" class="mt-4">
                   <h5>Profissões Selecionadas:</h5>
-                  <div v-for="(item, index) in selectedProfessionsWithQuantity" :key="index" class="mb-3 p-3 border rounded">
+                  <div v-for="(item, index) in userData.selectedProfessionsWithQuantity" :key="index" class="mb-3 p-3 border rounded">
                     <div class="d-flex justify-content-between align-items-center">
                       <div class="d-flex align-items-center">
-                        <img :src="item.icon" alt="icon" class="icon-image mr-2" />
-                        <strong>{{ item.text }}</strong>
+                        <img :src="item.iconURL" alt="icon" class="icon-image mr-2" />
+                        <strong>{{ item.name }}</strong>
                       </div>
                       <div>
                         <button @click="decreaseQuantity(item)" class="btn btn-outline-danger btn-sm">-</button>
-                        <span class="mx-2">{{ item.quantity }}</span>
+                        <span class="mx-2">{{ item.quantidade }}</span>
                         <button @click="increaseQuantity(item)" class="btn btn-outline-success btn-sm">+</button>
                       </div>
                       <button @click="removeProfessionByIndex(index)" class="btn btn-outline-danger btn-sm">Remover</button>

@@ -3,13 +3,12 @@ import axios from "axios";
 
 // Estado inicial da store do Vuex
 const state = {
-    // user: null, // Armazena o e-mail do usuário autenticado
-    // userDetails: null, // Armazena informações detalhadas do usuário
+    myeventos:[],
 };
 
 // Getters são funções que recuperam o estado de forma derivada e controlada
 const getters = {
-
+    GetMyEventos: (state) => state.myeventos,
 };
 
 // Ações assíncronas que podem realizar chamadas à API e manipular o estado através de mutations
@@ -54,11 +53,28 @@ const actions = {
     },
 
 
+
+    async getEventosMe({ commit }) {
+        const request = await axios.get("http://localhost:8000/api/evento/me"
+        ,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MywiZW1haWwiOiJkd2Fkd2FkZGR3YUBnbWFpbC5jb20iLCJuYW1lIjoibWxub21vaSIsImlhdCI6MTcyOTk1ODUwOSwiZXhwIjoxNzMwNTE0MDY0fQ.ADih34Ioh8w0OZ3W3hmRKIKTh8TnDg1m27cbyl5AhgQ`  // Adiciona o token aqui
+                }
+            });
+
+        commit("setEventosMe", { eventos: await request.data.Evento });
+    },
+
+
 };
 
 // Mutations são responsáveis por atualizar o estado de maneira síncrona
 const mutations = {
-
+    setEventosMe(state, { eventos }) {
+        state.myeventos = eventos;
+    },
 };
 
 // Exporta o módulo Vuex para ser utilizado em outras partes da aplicação

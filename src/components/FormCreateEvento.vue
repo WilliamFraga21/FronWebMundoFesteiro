@@ -277,8 +277,8 @@ export default {
                          :clear-on-select="false"
                          :preserve-search="true"
                          placeholder="Click para esolher uma profissão"
-                         label="text"
-                         track-by="value"
+                         label="name"
+                         track-by="id"
                          @select="addProfession"
                          @remove="removeProfession"
             >
