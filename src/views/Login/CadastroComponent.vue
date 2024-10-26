@@ -2,7 +2,6 @@
   <div class="d-flex">
     <img src="../../assets/imagens/Side%20Image.svg" alt="">
     <div class="form-container m-auto">
-      <CardErroMessage v-if="erroIf" :errorMessageCard="errorMessage"></CardErroMessage>
       <div class="mb-4">
         <h2>Criar uma Conta</h2>
       </div>
@@ -149,6 +148,7 @@ export default {
     },
     async register() {
       // Validação da senha
+      console.log("Botão de Cadastro clicado");
       const passwordValidation = this.validatePassword(this.userData.password);
       if (passwordValidation) {
         this.passwordError = passwordValidation;

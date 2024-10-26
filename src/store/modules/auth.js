@@ -13,23 +13,27 @@ const getters = {
 const actions = {
   async Register({ dispatch }, User) {
     const user = JSON.stringify({
-      name: User.get("name"),
-      email: User.get("email"),
-      contactno: User.get("contactno"),
-      password: User.get("password"),
-      endereco: User.get("endereco"),
-      bairro: User.get("bairro"),
-      cidade: User.get("cidade"),
-      estado: User.get("estado"),
-      idade: User.get("idade"),
+      name: User.name,
+      email: User.email,
+      contactno: User.contactno,
+      password: User.password,
+      endereco: User.endereco,
+      bairro: User.bairro,
+      cidade: User.cidade,
+      estado: User.estado,
+      idade: User.idade,
     });
 
     try {
       // Envia os dados do usuário para criar a conta
-      await axios.post("http://localhost:8000/api/user/create", user);
+      await axios.post("http://localhost:8000/api/user/create", user, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
 
       // Após criar a conta, faz login automático
-      await dispatch("LogIn", User.get("email"), User.get("password"));
+      await dispatch("LogIn", { email: User.email, password: User.password });
     } catch (error) {
       console.error("Erro no registro:", error);
       throw new Error("Erro ao criar conta.");
@@ -37,40 +41,34 @@ const actions = {
   },
 
   async LogIn({ commit }, credentials) {
-    // Prepare o objeto de usuário com os dados do formulário
     const user = {
-        email: credentials.email,
-        password: credentials.password, // Corrigido o nome do campo para 'password'
+      email: credentials.email,
+      password: credentials.password,
     };
 
     try {
-        const request = await axios.post("http://localhost:8000/auth/login", user);
+      const request = await axios.post("http://localhost:8000/auth/login", user);
 
-        // Verifica se a resposta tem um token
-        if (request.data.token) {
-            commit("setUser", { email: credentials.email, token: request.data.token });
-            return request;
-        } else {
-            throw new Error("Usuário não existe"); // Mensagem genérica
-        }
+      if (request.data.token) {
+        commit("setUser", { email: credentials.email, token: request.data.token });
+        return request;
+      } else {
+        throw new Error("Usuário não existe");
+      }
     } catch (error) {
-        console.error("Erro no login:", error);
-
-        // Verifique se o erro é do Axios e obtenha a mensagem
-        if (error.response) {
-            // Trate os códigos de status específicos
-            if (error.response.status === 401) {
-                throw new Error("E-mail ou Senha incorretos"); // E-mail ou senha errados
-            } else if (error.response.status === 404) {
-                throw new Error("Usuário não encontrado"); // Usuário não existe
-            } else {
-                throw new Error(error.response.data.message || "Erro ao fazer login.");
-            }
+      console.error("Erro no login:", error);
+      if (error.response) {
+        if (error.response.status === 401) {
+          throw new Error("E-mail ou Senha incorretos");
+        } else if (error.response.status === 404) {
+          throw new Error("Usuário não encontrado");
+        } else {
+          throw new Error(error.response.data.message || "Erro ao fazer login.");
         }
-        throw new Error("Erro ao fazer login.");
+      }
+      throw new Error("Erro ao fazer login.");
     }
-},
-
+  },
 
   async ifToken({ commit }, token) {
     try {
