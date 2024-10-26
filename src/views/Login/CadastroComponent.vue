@@ -167,6 +167,7 @@ export default {
       try {
         await this.$store.dispatch("Register", this.userData);
         // Caso o cadastro seja bem-sucedido, você pode redirecionar ou limpar os campos
+        this.$router.push("/home");
       } catch (error) {
         this.errorMessage = "Erro ao criar a conta. Por favor, tente novamente.";
         this.erroIf = true;
