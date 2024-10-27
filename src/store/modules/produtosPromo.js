@@ -14,7 +14,7 @@ const actions = {
     try {
       const response = await axios.get(`/Promo/${idPromo}`);
       console.log('Resposta da API:', response.data); // Verifique a estrutura da resposta
-      if (response.status === 200) {
+      if (response.status === 200 || response.status === 201) {
         commit("setProdutosPromocao", response.data.Produtos);
       }
     } catch (error) {

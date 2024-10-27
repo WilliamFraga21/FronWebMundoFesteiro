@@ -2,7 +2,7 @@
 export default {
   props: {
     produto: {
-      type: Object,
+      type: Array,
       required: true,
     },
   },
@@ -32,7 +32,7 @@ export default {
         <div class="d-flex align-items-center position-absolute top-0 start-0 m-3">
           <div class="bg-danger rounded" style="width: 60px; height: 25px;">
             <div class="text-white d-flex align-items-center">
-              <p class="m-auto">-40%</p>
+              <p class="m-auto">-{{ produto.Porcentagem}}%</p>
             </div>
           </div>
         </div>
@@ -46,8 +46,8 @@ export default {
           <h5 class="card-title">{{ produto.Nome_Produto}}</h5>
           <div class="card-text d-flex align-items-center">
 
-            <p class="text-danger fw-bold mb-0">R$ {{produto. Valor}}</p>
-            <p class="text-body-tertiary text-decoration-line-through fw-bold ms-3 mb-0">R$:2,00 und</p>
+            <p class="text-danger fw-bold mb-0">R$ {{produto.valorComDesconto}} </p>
+            <p class="text-body-tertiary text-decoration-line-through fw-bold ms-3 mb-0">R${{produto. Valor}} und</p>
           </div>
           <div class="d-flex align-items-center">
             <div>

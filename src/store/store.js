@@ -5,6 +5,7 @@ import viaCep from "@/store/modules/viaCep";
 import Events from "@/store/modules/Events.js";
 import Professions from "@/store/modules/Professions.js";
 import Categorias from "@/store/modules/Categorias.js";
+import produtosPromo from './modules/produtosPromo';
 
 export default new Vuex.Store({
   modules: {
@@ -13,6 +14,8 @@ export default new Vuex.Store({
     Events,
     Professions,
     Categorias,
+    produtosPromo,
+
   },
   plugins: [createPersistedState()],
 });

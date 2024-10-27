@@ -46,11 +46,11 @@
       </div>
     </div>
 
+    {{ store.getters.getProdutosPromocao }}
+
     <div class="carousel-container" ref="carouselContainer">
       <div class="carousel-wrapper d-flex">
-      <CardPromoHome v-for="produto in getProdutosPromocao" :key="produto.ProdutoID" :produto="produto" />
-      <p v-if="!getProdutosPromocao.length" class="text-center w-100">Nenhum produto em promoção no momento.</p>
-
+      <CardPromoHome v-for="(item, index) in store.getters.getProdutosPromocao" :key="index" :produto="item" />
       </div>
     </div>
 
@@ -62,7 +62,8 @@
 
 <script>
 import CardPromoHome from "@/components/CardPromoHome.vue";
-import { mapGetters, mapActions } from 'vuex';
+import {mapActions, mapGetters} from "vuex";
+import store from "@/store/store.js";
 
 export default {
   components: { CardPromoHome },
@@ -74,11 +75,15 @@ export default {
       seconds: "00",
     };
   },
+
   computed: {
-  ...mapGetters('produtosPromo', ['getProdutosPromocao']),
+    store() {
+      return store;
+    }
   },
   methods: {
-    ...mapActions('produtosPromo', ['fetchProdutosPromocao']),
+    ...mapGetters(['getProdutosPromocao']),
+    ...mapActions(['fetchProdutosPromocao']),
     startTimer() {
       setInterval(() => {
         const endTime = new Date("2024-12-31T23:59:59").getTime();
@@ -109,7 +114,7 @@ export default {
   },
   async mounted() {
     this.startTimer();
-    await this.fetchProdutosPromocao();
+    await this.fetchProdutosPromocao(2);
   },
 };
 </script>
