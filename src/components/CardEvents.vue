@@ -6,6 +6,19 @@ export default {
 
   props:{
     data: Array
+  },
+
+  methods:{
+    daysSince(dateTime) {
+      const date = new Date(dateTime); // Converte a string para um objeto Date
+      const now = new Date(); // Data e hora atuais
+
+      // Calcula a diferença em milissegundos e converte para dias
+      const diffTime = Math.abs(now - date);
+      const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+      return diffDays;
+    }
   }
 }
 </script>
@@ -29,7 +42,7 @@ export default {
         <ModalEditEvent :datamodal="data" :id="data.evento.id"></ModalEditEvent>
       </div>
       <div class="card-footer text-body-secondary">
-        2 dias atras
+        {{daysSince(data.evento.data)}} dias atras
       </div>
     </div>
   </div>

@@ -2,12 +2,14 @@ import axios from "axios";
 
 const state = {
   user: null,
+  token: null,
   userDetails: null,
 };
 
 const getters = {
   isAuthenticated: (state) => !!state.user,
   StateUser: (state) => state.user,
+  StateToken: (state) => state.token,
 };
 
 const actions = {
@@ -50,7 +52,7 @@ const actions = {
       const request = await axios.post("http://localhost:8000/auth/login", user);
 
       if (request.data.token) {
-        commit("setUser", { email: credentials.email, token: request.data.token });
+        commit("setUser", { token: request.data.token });
         return request;
       } else {
         throw new Error("Usuário não existe");
@@ -99,8 +101,8 @@ const actions = {
 };
 
 const mutations = {
-  setUser(state, { email, token }) {
-    state.user = email;
+  setUser(state, { token }) {
+    console.log(token)
     state.token = token;
   },
   setUserDetails(state, userDetails) {

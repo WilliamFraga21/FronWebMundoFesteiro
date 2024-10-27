@@ -121,7 +121,7 @@ export default {
   methods: {
     ...mapActions([
       "CriarEvento", "clearAddressData","getProfessions"]),
-    ...mapGetters(["GetProfessions"]),
+    ...mapGetters(["GetProfessions","StateToken"]),
 
 
 
@@ -177,7 +177,7 @@ export default {
 
       try {
         // Envia a ação CriarEvento com os dados formatados
-        await this.$store.dispatch("UpdateEvento", {data:this.userData,id:this.id});
+        await this.$store.dispatch("UpdateEvento", {data:this.userData,id:this.id,token: this.store.getters.StateToken});
 
         console.log('Evento criado com sucesso!');
 
@@ -200,7 +200,7 @@ export default {
 
       try {
         // Envia a ação CriarEvento com os dados formatados
-        await this.$store.dispatch("uploadIMGEvent", {id:this.id, img:this.selectedFile});
+        await this.$store.dispatch("uploadIMGEvent", {id:this.id, img:this.selectedFile,token: this.store.getters.StateToken});
 
         console.log('Evento criado com sucesso!');
         this.$router.push('/myeventos').then(() => {

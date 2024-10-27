@@ -67,7 +67,7 @@ export default {
 
     ...mapActions([
       "CriarEvento", "clearAddressData","getProfessions"]),
-    ...mapGetters(["GetProfessions"]),
+    ...mapGetters(["GetProfessions","StateToken"]),
 
     async getprofessions() {
       try {
@@ -117,7 +117,7 @@ export default {
 
       try {
         // Envia a ação CriarEvento com os dados formatados
-        await this.$store.dispatch("CriarEvento", this.userData);
+        await this.$store.dispatch("CriarEvento", {data:this.userData,token:this.store.getters.StateToken });
 
         console.log('Evento criado com sucesso!');
         // Aqui você pode adicionar qualquer ação a ser realizada após o sucesso, como redirecionar ou limpar os campos

@@ -3,12 +3,12 @@
 import HeraderAdminEvento from "@/components/HeraderAdminEvento.vue";
 import MenuEvento from "@/components/MenuEvento.vue";
 import CardEvents from "@/components/CardEvents.vue";
-import ModalEditEvent from "@/components/ModalEditEvent.vue";
+
 import store from "@/store/store.js";
 import {mapActions, mapGetters} from "vuex";
 
 export default {
-  components: {CardEvents, MenuEvento, HeraderAdminEvento,ModalEditEvent},
+  components: {CardEvents, MenuEvento, HeraderAdminEvento},
 
 
 
@@ -30,7 +30,7 @@ export default {
 
     async geteventos() {
       try {
-        return await this.getEventosMe();
+        return await this.getEventosMe(this.store.getters.StateToken);
       } catch (error) {
         console.log(error)
       }

@@ -19,18 +19,18 @@ const actions = {
         // Extrai dados do formulário e os organiza em um objeto user para facilitar a chamada da API
 
         const user = {
-            nomeEvento: userForm2.nameEvent,
-            tipoEvento: userForm2.tipoEvento,
-            quantidadePessoas: userForm2.quantidadeConvidados,
-            data: userForm2.data,
-            quantidadeFuncionarios: userForm2.quantidadeFuncionarios,
-            statusEvento: userForm2.statusEvento,
-            descricaoEvento: userForm2.descricao,
-            endereco: userForm2.endereco,
-            bairro: userForm2.bairro,
-            cidade: userForm2.cidade,
-            estado: userForm2.estado,
-            professions: userForm2.selectedProfessionsWithQuantity,
+            nomeEvento: userForm2.data.nameEvent,
+            tipoEvento: userForm2.data.tipoEvento,
+            quantidadePessoas: userForm2.data.quantidadeConvidados,
+            data: userForm2.data.data,
+            quantidadeFuncionarios: userForm2.data.quantidadeFuncionarios,
+            statusEvento: userForm2.data.statusEvento,
+            descricaoEvento: userForm2.data.descricao,
+            endereco: userForm2.data.endereco,
+            bairro: userForm2.data.bairro,
+            cidade: userForm2.data.cidade,
+            estado: userForm2.data.estado,
+            professions: userForm2.data.selectedProfessionsWithQuantity,
         };
 
         try {
@@ -41,7 +41,7 @@ const actions = {
                 {
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MywiZW1haWwiOiJkd2Fkd2FkZGR3YUBnbWFpbC5jb20iLCJuYW1lIjoibWxub21vaSIsImlhdCI6MTcyOTk1ODUwOSwiZXhwIjoxNzMwNTE0MDY0fQ.ADih34Ioh8w0OZ3W3hmRKIKTh8TnDg1m27cbyl5AhgQ`  // Adiciona o token aqui
+                        'Authorization': `Bearer ${userForm2.token}`  // Adiciona o token aqui
                     }
                 }
             );
@@ -75,12 +75,12 @@ const actions = {
         try {
             // Envia uma solicitação POST para a API com os dados do usuário para criar uma nova conta, incluindo o token Bearer
             await axios.post(
-            `http://localhost:8000/api/evento/update/1${userForm2.id}`,
+            `http://localhost:8000/api/evento/update/${userForm2.id}`,
                 JSON.stringify(user),
                 {
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MywiZW1haWwiOiJkd2Fkd2FkZGR3YUBnbWFpbC5jb20iLCJuYW1lIjoibWxub21vaSIsImlhdCI6MTcyOTk1ODUwOSwiZXhwIjoxNzMwNTE0MDY0fQ.ADih34Ioh8w0OZ3W3hmRKIKTh8TnDg1m27cbyl5AhgQ`  // Adiciona o token aqui
+                        'Authorization': `Bearer ${userForm2.token}`  // Adiciona o token aqui
                     }
                 }
             );
@@ -93,13 +93,13 @@ const actions = {
 
 
 
-    async getEventosMe({ commit }) {
+    async getEventosMe({ commit },token) {
         const request = await axios.get("http://localhost:8000/api/evento/me"
         ,
             {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MywiZW1haWwiOiJkd2Fkd2FkZGR3YUBnbWFpbC5jb20iLCJuYW1lIjoibWxub21vaSIsImlhdCI6MTcyOTk1ODUwOSwiZXhwIjoxNzMwNTE0MDY0fQ.ADih34Ioh8w0OZ3W3hmRKIKTh8TnDg1m27cbyl5AhgQ`  // Adiciona o token aqui
+                    'Authorization': `Bearer ${token}`  // Adiciona o token aqui
                 }
             });
 
@@ -113,7 +113,7 @@ const actions = {
 
         dataimg.append('img',data.img)
 
-        console.log(dataimg)
+        console.log(data)
 
         const request = await axios.post(`http://localhost:8000/api/evento/create/photo/${data.id}`
             ,
@@ -125,7 +125,7 @@ const actions = {
 
             {
                 headers: {
-                    'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MywiZW1haWwiOiJkd2Fkd2FkZGR3YUBnbWFpbC5jb20iLCJuYW1lIjoibWxub21vaSIsImlhdCI6MTcyOTk1ODUwOSwiZXhwIjoxNzMwNTE0MDY0fQ.ADih34Ioh8w0OZ3W3hmRKIKTh8TnDg1m27cbyl5AhgQ`  // Adiciona o token aqui
+                    'Authorization': `Bearer ${data.token}`  // Adiciona o token aqui
                 }
             });
 
