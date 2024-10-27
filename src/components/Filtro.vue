@@ -59,10 +59,8 @@ export default {
 
     <div class="mt-5 me-5">
 
-      <div class="mt-1 me-1"   v-for="(item,index) in store.getters.GetCategorias " :key="index" >
-        <div class="dropdown m-auto " v-if=" item.subCategoria !== null">
-
-
+      <div class="mt-1 me-1" v-for="(item, index) in store.getters.GetCategorias.slice(0, 10)" :key="index">
+        <div class="dropdown m-auto" v-if="item.Subcategorias && item.Subcategorias.length > 0">
           <button
               class="btn dropdown-toggle d-flex align-items-center p-0 border-0 bg-transparent text-dark d-grid gap-2"
               type="button"
@@ -72,26 +70,21 @@ export default {
           >
             {{ item.Categoria }}
             <i class="bi bi-chevron-down ms-1"></i>
-
           </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" >
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <li v-for="(item2, index2) in item.Subcategorias" :key="index2">
               <a class="dropdown-item" href="#">{{ item2.SubCategoria }}</a>
             </li>
           </ul>
-
         </div>
 
-        <div class="dropdown m-auto " v-else-if=" item.subCategoria === null">
-
+        <div class="dropdown m-auto" v-else-if="item.Subcategorias && item.Subcategorias.length === 0">
           <a>
             {{ item.Categoria }}
           </a>
-
         </div>
-
-
       </div>
+
 
 
     </div>
