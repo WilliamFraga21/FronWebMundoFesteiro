@@ -14,7 +14,7 @@ export default {
       <!-- Imagem do Card -->
       <div class="card-img-container position-relative">
         <!-- Verifique se o caminho da imagem está correto -->
-        <img src="@/assets/imagens/image%203.svg" class="card-img-top " alt="Imagem do Card" style="height: 200px">
+        <img src="@/assets/imagens/image3.svg" class="card-img-top " alt="Imagem do Card" style="height: 200px">
         <!-- Barra de Adicionar ao Carrinho -->
         <button  class="add-to-cart-btn position-absolute bottom-0 start-0 w-100  align-items-center justify-content-center" data-bs-toggle="modal" data-bs-target="#exampleModal">
           Ver Detalhes

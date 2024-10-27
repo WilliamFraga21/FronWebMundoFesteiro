@@ -1,50 +1,3 @@
-<script>
-import CardPromoHome from "@/components/CardPromoHome.vue";
-export default {
-  components: { CardPromoHome },
-  data() {
-    return {
-      days: "00",
-      hours: "00",
-      minutes: "00",
-      seconds: "00",
-    };
-  },
-  mounted() {
-    this.startTimer();
-  },
-  methods: {
-    startTimer() {
-      setInterval(() => {
-        const endTime = new Date("2024-12-31T23:59:59").getTime();
-        const now = new Date().getTime();
-        const timeDiff = endTime - now;
-
-        if (timeDiff > 0) {
-          this.days = this.formatTime(Math.floor(timeDiff / (1000 * 60 * 60 * 24)));
-          this.hours = this.formatTime(Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
-          this.minutes = this.formatTime(Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60)));
-          this.seconds = this.formatTime(Math.floor((timeDiff % (1000 * 60)) / 1000));
-        } else {
-          this.days = this.hours = this.minutes = this.seconds = "00";
-        }
-      }, 1000);
-    },
-    formatTime(unit) {
-      return unit < 10 ? "0" + unit : unit;
-    },
-    scrollLeft() {
-      const container = this.$refs.carouselContainer;
-      container.scrollBy({ left: -container.offsetWidth * 0.8, behavior: 'smooth' });
-    },
-    scrollRight() {
-      const container = this.$refs.carouselContainer;
-      container.scrollBy({ left: container.offsetWidth * 0.8, behavior: 'smooth' });
-    }
-  },
-};
-</script>
-
 <template>
   <div class="mb-5 mt-5">
     <div class="d-flex align-items-center">
@@ -95,13 +48,9 @@ export default {
 
     <div class="carousel-container" ref="carouselContainer">
       <div class="carousel-wrapper d-flex">
-        <CardPromoHome/>
-        <CardPromoHome/>
-        <CardPromoHome/>
-        <CardPromoHome/>
-        <CardPromoHome/>
-        <CardPromoHome/>
-        <CardPromoHome/>
+      <CardPromoHome v-for="produto in getProdutosPromocao" :key="produto.ProdutoID" :produto="produto" />
+      <p v-if="!getProdutosPromocao.length" class="text-center w-100">Nenhum produto em promoção no momento.</p>
+
       </div>
     </div>
 
@@ -110,6 +59,60 @@ export default {
     </div>
   </div>
 </template>
+
+<script>
+import CardPromoHome from "@/components/CardPromoHome.vue";
+import { mapGetters, mapActions } from 'vuex';
+
+export default {
+  components: { CardPromoHome },
+  data() {
+    return {
+      days: "00",
+      hours: "00",
+      minutes: "00",
+      seconds: "00",
+    };
+  },
+  computed: {
+  ...mapGetters('produtosPromo', ['getProdutosPromocao']),
+  },
+  methods: {
+    ...mapActions('produtosPromo', ['fetchProdutosPromocao']),
+    startTimer() {
+      setInterval(() => {
+        const endTime = new Date("2024-12-31T23:59:59").getTime();
+        const now = new Date().getTime();
+        const timeDiff = endTime - now;
+
+        if (timeDiff > 0) {
+          this.days = this.formatTime(Math.floor(timeDiff / (1000 * 60 * 60 * 24)));
+          this.hours = this.formatTime(Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+          this.minutes = this.formatTime(Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60)));
+          this.seconds = this.formatTime(Math.floor((timeDiff % (1000 * 60)) / 1000));
+        } else {
+          this.days = this.hours = this.minutes = this.seconds = "00";
+        }
+      }, 1000);
+    },
+    formatTime(unit) {
+      return unit < 10 ? "0" + unit : unit;
+    },
+    scrollLeft() {
+      const container = this.$refs.carouselContainer;
+      container.scrollBy({ left: -container.offsetWidth * 0.8, behavior: 'smooth' });
+    },
+    scrollRight() {
+      const container = this.$refs.carouselContainer;
+      container.scrollBy({ left: container.offsetWidth * 0.8, behavior: 'smooth' });
+    },
+  },
+  async mounted() {
+    this.startTimer();
+    await this.fetchProdutosPromocao();
+  },
+};
+</script>
 
 <style scoped>
 .promo-timer {
@@ -155,18 +158,18 @@ export default {
 
 .carousel-wrapper > * {
   flex: 0 0 auto;
-  margin-right: 10px; /* Adjust spacing between cards if needed */
+  margin-right: 10px; /* Ajusta o espaçamento entre os cards, se necessário */
 }
 
 @media (max-width: 768px) {
   .carousel-wrapper {
-    /* Adjust card size and spacing for smaller screens */
+    /* Ajusta o tamanho e espaçamento dos cards para telas menores */
     font-size: 14px;
   }
 
   .carousel-wrapper > * {
     flex: 0 0 auto;
-    margin-right: 5px; /* Reduce spacing for smaller screens */
+    margin-right: 5px; /* Reduz o espaçamento para telas menores */
   }
 
   .promo-timer {
@@ -183,7 +186,7 @@ export default {
 
   .carousel-wrapper > * {
     flex: 0 0 auto;
-    margin-right: 3px; /* Further reduce spacing for mobile screens */
+    margin-right: 3px; /* Reduz ainda mais o espaçamento para telas móveis */
   }
 
   .promo-timer {

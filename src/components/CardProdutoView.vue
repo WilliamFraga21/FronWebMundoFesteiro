@@ -3,17 +3,17 @@
     <!-- Imagens Laterais -->
     <div class="col-12 col-md-2 d-flex justify-content-center mb-3 mb-md-0">
       <div class="side-images">
-        <img src="@/assets/imagens/image%203.svg" class="card-img-top bg-body-secondary rounded mb-2" alt="Imagem do Card">
-        <img src="@/assets/imagens/image%203.svg" class="card-img-top bg-body-secondary rounded mb-2" alt="Imagem do Card">
-        <img src="@/assets/imagens/image%203.svg" class="card-img-top bg-body-secondary rounded mb-2" alt="Imagem do Card">
-        <img src="@/assets/imagens/image%203.svg" class="card-img-top bg-body-secondary rounded mb-2" alt="Imagem do Card">
+        <img src="@/assets/imagens/image3.svg" class="card-img-top bg-body-secondary rounded mb-2" alt="Imagem do Card">
+        <img src="@/assets/imagens/image3.svg" class="card-img-top bg-body-secondary rounded mb-2" alt="Imagem do Card">
+        <img src="@/assets/imagens/image3.svg" class="card-img-top bg-body-secondary rounded mb-2" alt="Imagem do Card">
+        <img src="@/assets/imagens/image3.svg" class="card-img-top bg-body-secondary rounded mb-2" alt="Imagem do Card">
       </div>
     </div>
 
     <!-- Imagem Principal -->
     <div class="col-12 col-md-5 d-flex justify-content-center mb-3 mb-md-0">
       <div class="main-image">
-        <img src="@/assets/imagens/image%203.svg" class="card-img-top bg-body-secondary rounded" alt="Imagem do Card">
+        <img src="@/assets/imagens/image3.svg" class="card-img-top bg-body-secondary rounded" alt="Imagem do Card">
       </div>
     </div>
 
