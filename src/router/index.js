@@ -12,6 +12,7 @@ import EditarProduto from "@/views/Admin/EditarProduto.vue";
 import CreateEvento from "@/views/AdminEvento/CreateEvento.vue";
 import PedidosHoje from "@/views/Admin/PedidosHoje.vue";
 import MyEvents from "@/components/MyEvents.vue";
+import ProdutosCat from "@/views/ProdutosCatView.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -74,6 +75,11 @@ const router = createRouter({
       path: '/myeventos',
       name: 'myeventos',
       component: MyEvents
+    },
+    {
+      path: '/ProdutosCat',
+      name: 'ProdutosCat',
+      component: ProdutosCat
     },
 
   ]

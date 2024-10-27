@@ -40,6 +40,12 @@ export default {
     },
 
 
+    pushCat(seuId){
+      this.$router.push({ path: "/ProdutosCat", query: { id: seuId } });
+
+    }
+
+
 
 
 
@@ -67,19 +73,20 @@ export default {
               id="dropdownMenuButton"
               data-bs-toggle="dropdown"
               aria-expanded="false"
+              @click="pushCat(item.idCategoria)"
           >
             {{ item.Categoria }}
             <i class="bi bi-chevron-down ms-1"></i>
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <li v-for="(item2, index2) in item.Subcategorias" :key="index2">
-              <a class="dropdown-item" href="#">{{ item2.SubCategoria }}</a>
+              <a class="dropdown-item" href="#" @click="pushCat(item.idSubCategoria)">{{ item2.SubCategoria }}</a>
             </li>
           </ul>
         </div>
 
         <div class="dropdown m-auto" v-else-if="item.Subcategorias && item.Subcategorias.length === 0">
-          <a>
+          <a  @click="pushCat(item.idCategoria)">
             {{ item.Categoria }}
           </a>
         </div>

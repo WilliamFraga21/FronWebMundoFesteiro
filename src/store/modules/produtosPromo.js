@@ -21,6 +21,20 @@ const actions = {
       console.error("Erro ao buscar produtos em promoção:", error);
     }
   },
+
+
+
+  async getProdutosCat({ commit }, id) {
+    try {
+      const response = await axios.get(`/produtossubcat/${id}`);
+      console.log('Resposta da API:', response.data); // Verifique a estrutura da resposta
+      if (response.status === 200 || response.status === 201) {
+        commit("setProdutosPromocao", response.data.Produtos);
+      }
+    } catch (error) {
+      console.error("Erro ao buscar produtos em promoção:", error);
+    }
+  },
 };
 
 
