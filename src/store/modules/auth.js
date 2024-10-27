@@ -85,9 +85,12 @@ const actions = {
         request.status === 401 ||
         request.status === 404 ||
         request.status === 500
-      ) throw new Error(request.statusText);
+      ) {
+        commit("IfToken", { infos: await request.data });
+        this.$router.push("/");
+        throw new Error(request.statusText);
 
-      commit("IfToken", { infos: await request.data });
+      }
       return request;
     } catch (error) {
       console.error("Erro ao verificar token:", error);
@@ -110,6 +113,8 @@ const mutations = {
   },
   IfToken(state, { infos }) {
     state.iftoken = infos;
+    state.token = null;
+
   },
   LogOut(state) {
     state.user = null;
