@@ -23,9 +23,7 @@ export default {
 
         return await this.ifToken(this.store.getters.StateToken);
       } catch (error) {
-        this.$router.push(`/login`).then(() => {
-          window.location.reload();
-        });
+        this.$router.push(`/login`);
         console.log(error)
       }
     },
