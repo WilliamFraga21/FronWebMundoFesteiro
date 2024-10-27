@@ -36,7 +36,46 @@ const actions = {
         try {
             // Envia uma solicitação POST para a API com os dados do usuário para criar uma nova conta, incluindo o token Bearer
             await axios.post(
-                "http://localhost:8000/api/evento/create",
+                "/api/evento/create",
+                JSON.stringify(user),
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MywiZW1haWwiOiJkd2Fkd2FkZGR3YUBnbWFpbC5jb20iLCJuYW1lIjoibWxub21vaSIsImlhdCI6MTcyOTk1ODUwOSwiZXhwIjoxNzMwNTE0MDY0fQ.ADih34Ioh8w0OZ3W3hmRKIKTh8TnDg1m27cbyl5AhgQ`  // Adiciona o token aqui
+                    }
+                }
+            );
+        } catch (error) {
+            // Exibe erro no console e lança uma mensagem de erro específica para o registro
+            console.error("Erro no registro:", error);
+            throw new Error("Erro ao criar conta.");
+        }
+    },
+
+
+    async UpdateEvento({ commit }, userForm2) {
+
+        // Extrai dados do formulário e os organiza em um objeto user para facilitar a chamada da API
+
+        const user = {
+            nomeEvento: userForm2.data.nameEvent,
+            tipoEvento: userForm2.data.tipoEvento,
+            quantidadePessoas: userForm2.data.quantidadeConvidados,
+            data: userForm2.data.data,
+            quantidadeFuncionarios: userForm2.data.quantidadeFuncionarios,
+            statusEvento: userForm2.data.statusEvento,
+            descricaoEvento: userForm2.data.descricao,
+            endereco: userForm2.data.endereco,
+            bairro: userForm2.data.bairro,
+            cidade: userForm2.data.cidade,
+            estado: userForm2.data.estado,
+            professions: userForm2.data.selectedProfessionsWithQuantity,
+        };
+
+        try {
+            // Envia uma solicitação POST para a API com os dados do usuário para criar uma nova conta, incluindo o token Bearer
+            await axios.post(
+            `http://localhost:8000/api/evento/update/1${userForm2.id}`,
                 JSON.stringify(user),
                 {
                     headers: {
@@ -60,6 +99,32 @@ const actions = {
             {
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MywiZW1haWwiOiJkd2Fkd2FkZGR3YUBnbWFpbC5jb20iLCJuYW1lIjoibWxub21vaSIsImlhdCI6MTcyOTk1ODUwOSwiZXhwIjoxNzMwNTE0MDY0fQ.ADih34Ioh8w0OZ3W3hmRKIKTh8TnDg1m27cbyl5AhgQ`  // Adiciona o token aqui
+                }
+            });
+
+        commit("setEventosMe", { eventos: await request.data.Evento });
+    },
+
+
+    async uploadIMGEvent({ commit },data) {
+
+        let dataimg = new FormData();
+
+        dataimg.append('img',data.img)
+
+        console.log(dataimg)
+
+        const request = await axios.post(`http://localhost:8000/api/evento/create/photo/${data.id}`
+            ,
+
+
+
+
+            dataimg,
+
+            {
+                headers: {
                     'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MywiZW1haWwiOiJkd2Fkd2FkZGR3YUBnbWFpbC5jb20iLCJuYW1lIjoibWxub21vaSIsImlhdCI6MTcyOTk1ODUwOSwiZXhwIjoxNzMwNTE0MDY0fQ.ADih34Ioh8w0OZ3W3hmRKIKTh8TnDg1m27cbyl5AhgQ`  // Adiciona o token aqui
                 }
             });

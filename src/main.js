@@ -7,7 +7,7 @@ import router from './router';
 import store from './store/store.js'; // Importe a modules do Vuex
 import "bootstrap/dist/css/bootstrap.min.css";
 
-
+axios.defaults.baseURL = "http://localhost:8000";
 
 const app = createApp(App);
 
@@ -16,3 +16,4 @@ app.use(store); // Use a modules do Vuex no app
 
 app.mount('#app');
 import "bootstrap/dist/js/bootstrap.js";
+import axios from "axios";
