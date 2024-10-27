@@ -1,9 +1,43 @@
 <script>
+import store from "@/store/store.js";
+import {mapActions, mapGetters} from "vuex";
+
 export default {
   components: {  },
 
+  computed: {
+    store() {
+      return store;
+    }
+  },
+
+
+  async mounted() {
+
+
+    await this.getCat()
+
+
+  },
+
 
   methods: {
+
+
+    ...mapActions([
+      "getcategorias"]),
+    ...mapGetters(["GetCategorias"]),
+
+
+
+    async getCat() {
+      try {
+        return await this.getcategorias();
+      } catch (error) {
+        console.log(error)
+      }
+    },
+
 
 
     scrollLeft() {
@@ -53,14 +87,16 @@ export default {
         <div
             style="height: 145px; width: 170px"
             class="border border-2 rounded d-flex align-items-center m-0 ms-2 selectCat"
+            v-for="(item, index) in store.getters.GetCategorias.slice(0, 10)" :key="index"
         >
-          <div class="m-auto">
+          <div class="m-auto ">
             <img
                 src="../assets/imagens/icons8-festa-50.svg"
                 alt="Ícone de Festa"
                 class="icon-image"
             />
-            <p class="m-0 text-center">Doces</p>
+            <p class="m-0 text-center">{{ item.Categoria }}
+            </p>
           </div>
         </div>
 
