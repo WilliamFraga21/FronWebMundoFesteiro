@@ -1,85 +1,112 @@
 <script >
+import {mapActions, mapGetters} from "vuex";
+import store from "@/store/store.js";
 
 import CarouselHome from "@/components/CarouselHome.vue";
 export default {
-  components: {CarouselHome}
+  components: {CarouselHome},
+
+  computed: {
+    store() {
+      return store;
+    }
+  },
+
+
+  async mounted() {
+
+
+    await this.getCat()
+
+
+  },
+
+
+
+
+  methods:{
+    ...mapActions([
+      "getcategorias"]),
+    ...mapGetters(["GetCategorias"]),
+
+
+
+    async getCat() {
+      try {
+        return await this.getcategorias();
+      } catch (error) {
+        console.log(error)
+      }
+    },
+
+
+
+
+
+  }
+
+
+
 
 }
 </script>
 
 <template class="">
   <div class="border-end ">
-    <div class="dropdown m-auto mt-5 me-5" >
-      <button
-          class="btn dropdown-toggle d-flex align-items-center p-0 border-0 bg-transparent text-dark d-grid gap-2"
-          type="button"
-          id="dropdownMenuButton"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-      >
-        Doces
-        <i class="bi bi-chevron-down ms-1"></i> <!-- Ícone de seta apontando para baixo -->
-      </button>
-      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <li><a class="dropdown-item" href="#">Item 1</a></li>
-        <li><a class="dropdown-item" href="#">Item 2</a></li>
-        <li><a class="dropdown-item" href="#">Item 3</a></li>
-      </ul>
-    </div>
-    <div class="dropdown m-1">
-      <button
-          class="btn dropdown-toggle d-flex align-items-center p-0 border-0 bg-transparent text-dark d-grid gap-2"
-          type="button"
-          id="dropdownMenuButton"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-      >
-        Salgados
-        <i class="bi bi-chevron-down ms-1"></i> <!-- Ícone de seta apontando para baixo -->
-      </button>
-      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <li><a class="dropdown-item" href="#">Item 1</a></li>
-        <li><a class="dropdown-item" href="#">Item 2</a></li>
-        <li><a class="dropdown-item" href="#">Item 3</a></li>
-      </ul>
+
+
+
+
+    <div class="mt-5 me-5">
+
+      <div class="mt-1 me-1"   v-for="(item,index) in store.getters.GetCategorias " :key="index" >
+        <div class="dropdown m-auto " v-if=" item.subCategoria !== null">
+
+
+          <button
+              class="btn dropdown-toggle d-flex align-items-center p-0 border-0 bg-transparent text-dark d-grid gap-2"
+              type="button"
+              id="dropdownMenuButton"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+          >
+            {{ item.Categoria }}
+            <i class="bi bi-chevron-down ms-1"></i>
+
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" >
+            <li v-for="(item2, index2) in item.Subcategorias" :key="index2">
+              <a class="dropdown-item" href="#">{{ item2.SubCategoria }}</a>
+            </li>
+          </ul>
+
+        </div>
+
+        <div class="dropdown m-auto " v-else-if=" item.subCategoria === null">
+
+          <a>
+            {{ item.Categoria }}
+          </a>
+
+        </div>
+
+
+      </div>
+
+
     </div>
 
-    <div class="m-1">
-      <a>
-        Kits Festa
-      </a>
-    </div>
 
-    <div class="m-1">
-      <a>
-        Bolos
-      </a>
-    </div>
-    <div class="m-1">
-      <a>
-        Temáticas
-      </a>
-    </div>
-    <div class="m-1">
-      <a>
-        Cor
-      </a>
-    </div>
-    <div class="m-1">
-      <a>
-        Fantasias
-      </a>
-    </div>
-    <div class="m-1">
-      <a>
-        Velas
-      </a>
-    </div>
-    <div class="m-1">
-      <a>
-        Utensílios
-      </a>
-    </div>
+
+
+
+
+
+
+
+
+
+
 
 
   </div>
