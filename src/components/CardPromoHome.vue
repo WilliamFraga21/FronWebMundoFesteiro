@@ -47,7 +47,7 @@ export default {
           <div class="card-text d-flex align-items-center">
 
             <p class="text-danger fw-bold mb-0">R$ {{produto.valorComDesconto}} </p>
-            <p class="text-body-tertiary text-decoration-line-through fw-bold ms-3 mb-0">R${{produto. Valor}} und</p>
+            <p class="text-body-tertiary text-decoration-line-through fw-bold ms-3 mb-0">R${{produto.Valor}} und</p>
           </div>
           <div class="d-flex align-items-center">
             <div>

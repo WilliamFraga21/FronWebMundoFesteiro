@@ -48,7 +48,7 @@
 
     <div class="carousel-container" ref="carouselContainer">
       <div class="carousel-wrapper d-flex">
-        <CardPromoHome  :produto="store.getters.getProdutosPromocao" />
+        <CardPromoHome v-for="(item, index) in store.getters.getProdutosPromocao" :key="index" :produto="item" />
       </div>
     </div>
 
@@ -71,37 +71,58 @@ export default {
       hours: "00",
       minutes: "00",
       seconds: "00",
-      idPromo: 5,
+      idPromo: 6,
       endTime: null,
     };
   },
   computed: {
-    ...mapGetters(['getProdutosPromocao']),
+    
     store() {
       return store;
     }
   },
+async mounted() {
+  await this.fetchProdutosPromocao(this.idPromo);
+  if (typeof this.setEndTime === 'function') {
+    this.setEndTime();
+  } else {
+    console.error("Método 'setEndTime' não encontrado.");
+  }
+},
   methods: {
     ...mapActions(['fetchProdutosPromocao']),
-    startTimer() {
-      const interval = setInterval(() => {
-        const now = new Date().getTime();
-        const timeDiff = this.endTime - now;
+    ...mapGetters(['getProdutosPromocao']),
+    setEndTime() {
+    const produto = this.store.getters.getProdutosPromocao[0]; // Acessa o primeiro produto da lista
+    if (produto && produto.Tempo) {
+      this.endTime = new Date(produto.Tempo).getTime(); // Define o tempo de término
+      this.startTimer(); // Inicia a contagem regressiva
+    } else {
+      console.error("Campo 'Tempo' não encontrado no produto."); // Loga um erro se 'Tempo' não estiver definido
+    }
+  },
 
-        if (timeDiff > 0) {
-          this.days = this.formatTime(Math.floor(timeDiff / (1000 * 60 * 60 * 24)));
-          this.hours = this.formatTime(Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
-          this.minutes = this.formatTime(Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60)));
-          this.seconds = this.formatTime(Math.floor((timeDiff % (1000 * 60)) / 1000));
-        } else {
-          clearInterval(interval);
-          this.days = this.hours = this.minutes = this.seconds = "00";
-        }
-      }, 1000);
-    },
-    formatTime(unit) {
-      return unit < 10 ? "0" + unit : unit;
-    },
+  startTimer() {
+    if (!this.endTime) return;
+
+    setInterval(() => {
+      const now = new Date().getTime();
+      const timeDiff = this.endTime - now;
+
+      if (timeDiff > 0) {
+        this.days = this.formatTime(Math.floor(timeDiff / (1000 * 60 * 60 * 24)));
+        this.hours = this.formatTime(Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+        this.minutes = this.formatTime(Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60)));
+        this.seconds = this.formatTime(Math.floor((timeDiff % (1000 * 60)) / 1000));
+      } else {
+        this.days = this.hours = this.minutes = this.seconds = "00";
+      }
+    }, 1000);
+  },
+  
+  formatTime(unit) {
+    return unit < 10 ? "0" + unit : unit;
+  },
     scrollLeft() {
       const container = this.$refs.carouselContainer;
       container.scrollBy({ left: -container.offsetWidth * 0.8, behavior: 'smooth' });
@@ -110,22 +131,6 @@ export default {
       const container = this.$refs.carouselContainer;
       container.scrollBy({ left: container.offsetWidth * 0.8, behavior: 'smooth' });
     },
-  },
-  async mounted() {
-    await this.fetchProdutosPromocao(this.idPromo);
-    const promoData = this.getProdutosPromocao.find(item => item.ProdutoID === this.idPromo);
-    if (promoData && promoData.Tempo) {
-      this.endTime = new Date(promoData.Tempo).getTime(); // Configura a hora de término
-
-      // Verifique se endTime é um número válido
-      if (!isNaN(this.endTime)) {
-        this.startTimer(); // Inicia a contagem regressiva
-      } else {
-        console.error("O tempo final é inválido:", promoData.Tempo);
-      }
-    } else {
-      console.error("Promoção não encontrada ou Tempo não definido");
-    }
   },
 };
 </script>
