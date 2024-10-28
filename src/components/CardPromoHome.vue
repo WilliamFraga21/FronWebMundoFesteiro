@@ -60,7 +60,9 @@ export default {
             <p class="m-0 mt-1 ms-2" style="font-size: small">
               (150)
             </p>
+            
           </div>
+          <p class="text-capitalize mt-1">{{ produto.Descricao }}</p>
         </div>
       </div>
     </div>
