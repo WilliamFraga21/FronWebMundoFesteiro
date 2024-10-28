@@ -48,7 +48,7 @@
 
     <div class="carousel-container" ref="carouselContainer">
       <div class="carousel-wrapper d-flex">
-        <CardPromoHome class="mt-4" v-for="(item, index) in getProdutosPromocao" :key="index" :produto="item" />
+        <CardPromoHome  :produto="store.getters.getProdutosPromocao" />
       </div>
     </div>
 
