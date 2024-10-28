@@ -46,11 +46,9 @@
       </div>
     </div>
 
-    {{ store.getters.getProdutosPromocao }}
-
     <div class="carousel-container" ref="carouselContainer">
       <div class="carousel-wrapper d-flex">
-      <CardPromoHome v-for="(item, index) in store.getters.getProdutosPromocao" :key="index" :produto="item" />
+        <CardPromoHome class="mt-4" v-for="(item, index) in getProdutosPromocao" :key="index" :produto="item" />
       </div>
     </div>
 
@@ -62,7 +60,7 @@
 
 <script>
 import CardPromoHome from "@/components/CardPromoHome.vue";
-import {mapActions, mapGetters} from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import store from "@/store/store.js";
 
 export default {
@@ -73,22 +71,22 @@ export default {
       hours: "00",
       minutes: "00",
       seconds: "00",
+      idPromo: 5,
+      endTime: null,
     };
   },
-
   computed: {
+    ...mapGetters(['getProdutosPromocao']),
     store() {
       return store;
     }
   },
   methods: {
-    ...mapGetters(['getProdutosPromocao']),
     ...mapActions(['fetchProdutosPromocao']),
     startTimer() {
-      setInterval(() => {
-        const endTime = new Date("2024-12-31T23:59:59").getTime();
+      const interval = setInterval(() => {
         const now = new Date().getTime();
-        const timeDiff = endTime - now;
+        const timeDiff = this.endTime - now;
 
         if (timeDiff > 0) {
           this.days = this.formatTime(Math.floor(timeDiff / (1000 * 60 * 60 * 24)));
@@ -96,6 +94,7 @@ export default {
           this.minutes = this.formatTime(Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60)));
           this.seconds = this.formatTime(Math.floor((timeDiff % (1000 * 60)) / 1000));
         } else {
+          clearInterval(interval);
           this.days = this.hours = this.minutes = this.seconds = "00";
         }
       }, 1000);
@@ -113,8 +112,20 @@ export default {
     },
   },
   async mounted() {
-    this.startTimer();
-    await this.fetchProdutosPromocao(2);
+    await this.fetchProdutosPromocao(this.idPromo);
+    const promoData = this.getProdutosPromocao.find(item => item.ProdutoID === this.idPromo);
+    if (promoData && promoData.Tempo) {
+      this.endTime = new Date(promoData.Tempo).getTime(); // Configura a hora de término
+
+      // Verifique se endTime é um número válido
+      if (!isNaN(this.endTime)) {
+        this.startTimer(); // Inicia a contagem regressiva
+      } else {
+        console.error("O tempo final é inválido:", promoData.Tempo);
+      }
+    } else {
+      console.error("Promoção não encontrada ou Tempo não definido");
+    }
   },
 };
 </script>
@@ -163,18 +174,17 @@ export default {
 
 .carousel-wrapper > * {
   flex: 0 0 auto;
-  margin-right: 10px; /* Ajusta o espaçamento entre os cards, se necessário */
+  margin-right: 10px;
 }
 
 @media (max-width: 768px) {
   .carousel-wrapper {
-    /* Ajusta o tamanho e espaçamento dos cards para telas menores */
     font-size: 14px;
   }
 
   .carousel-wrapper > * {
     flex: 0 0 auto;
-    margin-right: 5px; /* Reduz o espaçamento para telas menores */
+    margin-right: 5px;
   }
 
   .promo-timer {
@@ -191,7 +201,7 @@ export default {
 
   .carousel-wrapper > * {
     flex: 0 0 auto;
-    margin-right: 3px; /* Reduz ainda mais o espaçamento para telas móveis */
+    margin-right: 3px;
   }
 
   .promo-timer {
@@ -199,3 +209,4 @@ export default {
   }
 }
 </style>
+
