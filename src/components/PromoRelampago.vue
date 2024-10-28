@@ -7,10 +7,8 @@
       </div>
     </div>
 
-    <div class="d-flex justify-content-between mt-3">
-      <div>
-        <h2>Promoção Relâmpago</h2>
-      </div>
+    <div class="mt-3">
+      <h2 class="promo-title">Promoção Relâmpago</h2>
       <div class="promo-timer d-flex align-items-center">
         <div class="time-unit text-center">
           <div class="label">Dias</div>
@@ -32,24 +30,35 @@
           <div class="value">{{ seconds }}</div>
         </div>
       </div>
-      <div class="d-flex">
-        <div class="ms-3 me-2" @click="scrollLeft">
-          <svg xmlns="http://www.w3.org/2000/svg" width="46" height="46" fill="currentColor" class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
-            <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
-          </svg>
-        </div>
-        <div class="ms-3 me-2" @click="scrollRight">
-          <svg xmlns="http://www.w3.org/2000/svg" width="46" height="46" fill="currentColor" class="bi bi-arrow-right-circle-fill" viewBox="0 0 16 16">
-            <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z"/>
-          </svg>
-        </div>
-      </div>
     </div>
 
-    <div class="carousel-container" ref="carouselContainer">
-      <div class="carousel-wrapper d-flex">
-        <CardPromoHome v-for="(item, index) in store.getters.getProdutosPromocao" :key="index" :produto="item" />
+    <div class="d-flex align-items-center mt-3">
+      <img
+        v-if="currentIndex > 0"
+        @click="scrollLeft"
+        class="arrow"
+        src="@/assets/imagens/ArrowLeft.svg"
+        alt="Seta Esquerda"
+        style="width: 46px; height: 46px; margin-right: 1rem; cursor: pointer;"
+      />
+      <div class="carousel-container" ref="carouselContainer">
+        <div class="carousel-wrapper" :style="carouselStyle">
+          <CardPromoHome
+            v-for="(item, index) in visibleProducts"
+            :key="index"
+            :produto="item"
+            class="card-promo"
+          />
+        </div>
       </div>
+      <img
+        v-if="currentIndex < totalProducts - 5"
+        @click="scrollRight"
+        class="arrow"
+        src="@/assets/imagens/ArrowRight.svg"
+        alt="Seta Direita"
+        style="width: 46px; height: 46px; margin-left: 1rem; cursor: pointer;"
+      />
     </div>
 
     <div class="d-grid gap-2 col-6 mx-auto mt-4" style="max-width: 15rem">
@@ -73,63 +82,78 @@ export default {
       seconds: "00",
       idPromo: 6,
       endTime: null,
+      currentIndex: 0,
     };
   },
   computed: {
-    
     store() {
       return store;
+    },
+    totalProducts() {
+      return this.store.getters.getProdutosPromocao.length;
+    },
+    visibleProducts() {
+      return this.store.getters.getProdutosPromocao.slice(
+        this.currentIndex,
+        this.currentIndex + 5
+      );
+    },
+    carouselStyle() {
+      return {
+        transform: `translateX(-${this.currentIndex * 100 / 5}%)`,
+        transition: "transform 0.3s ease",
+      };
+    },
+  },
+  async mounted() {
+    await this.fetchProdutosPromocao(this.idPromo);
+    if (typeof this.setEndTime === 'function') {
+      this.setEndTime();
+    } else {
+      console.error("Método 'setEndTime' não encontrado.");
     }
   },
-async mounted() {
-  await this.fetchProdutosPromocao(this.idPromo);
-  if (typeof this.setEndTime === 'function') {
-    this.setEndTime();
-  } else {
-    console.error("Método 'setEndTime' não encontrado.");
-  }
-},
   methods: {
     ...mapActions(['fetchProdutosPromocao']),
     ...mapGetters(['getProdutosPromocao']),
     setEndTime() {
-    const produto = this.store.getters.getProdutosPromocao[0]; // Acessa o primeiro produto da lista
-    if (produto && produto.Tempo) {
-      this.endTime = new Date(produto.Tempo).getTime(); // Define o tempo de término
-      this.startTimer(); // Inicia a contagem regressiva
-    } else {
-      console.error("Campo 'Tempo' não encontrado no produto."); // Loga um erro se 'Tempo' não estiver definido
-    }
-  },
-
-  startTimer() {
-    if (!this.endTime) return;
-
-    setInterval(() => {
-      const now = new Date().getTime();
-      const timeDiff = this.endTime - now;
-
-      if (timeDiff > 0) {
-        this.days = this.formatTime(Math.floor(timeDiff / (1000 * 60 * 60 * 24)));
-        this.hours = this.formatTime(Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
-        this.minutes = this.formatTime(Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60)));
-        this.seconds = this.formatTime(Math.floor((timeDiff % (1000 * 60)) / 1000));
+      const produto = this.store.getters.getProdutosPromocao[0];
+      if (produto && produto.Tempo) {
+        this.endTime = new Date(produto.Tempo).getTime();
+        this.startTimer();
       } else {
-        this.days = this.hours = this.minutes = this.seconds = "00";
+        console.error("Campo 'Tempo' não encontrado no produto.");
       }
-    }, 1000);
-  },
-  
-  formatTime(unit) {
-    return unit < 10 ? "0" + unit : unit;
-  },
+    },
+    startTimer() {
+      if (!this.endTime) return;
+
+      setInterval(() => {
+        const now = new Date().getTime();
+        const timeDiff = this.endTime - now;
+
+        if (timeDiff > 0) {
+          this.days = this.formatTime(Math.floor(timeDiff / (1000 * 60 * 60 * 24)));
+          this.hours = this.formatTime(Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+          this.minutes = this.formatTime(Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60)));
+          this.seconds = this.formatTime(Math.floor((timeDiff % (1000 * 60)) / 1000));
+        } else {
+          this.days = this.hours = this.minutes = this.seconds = "00";
+        }
+      }, 1000);
+    },
+    formatTime(unit) {
+      return unit < 10 ? "0" + unit : unit;
+    },
     scrollLeft() {
-      const container = this.$refs.carouselContainer;
-      container.scrollBy({ left: -container.offsetWidth * 0.8, behavior: 'smooth' });
+      if (this.currentIndex > 0) {
+        this.currentIndex--;
+      }
     },
     scrollRight() {
-      const container = this.$refs.carouselContainer;
-      container.scrollBy({ left: container.offsetWidth * 0.8, behavior: 'smooth' });
+      if (this.currentIndex < this.totalProducts - 5) {
+        this.currentIndex++;
+      }
     },
   },
 };
@@ -138,8 +162,10 @@ async mounted() {
 <style scoped>
 .promo-timer {
   display: flex;
-  justify-content: center;
+  justify-content: left;
   gap: 10px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
 }
 
 .time-unit {
@@ -169,48 +195,39 @@ async mounted() {
 .carousel-container {
   overflow: hidden;
   position: relative;
+  display: flex;
+  justify-content: center;
 }
 
 .carousel-wrapper {
   display: flex;
-  white-space: nowrap;
   transition: transform 0.3s ease;
 }
 
-.carousel-wrapper > * {
-  flex: 0 0 auto;
-  margin-right: 10px;
+.card-promo {
+  margin: 0 10px; /* Margem entre os cards */
 }
 
+/* Ajustes para telas menores */
 @media (max-width: 768px) {
-  .carousel-wrapper {
-    font-size: 14px;
+  .card-promo {
+    min-width: 100px; /* Largura mínima dos cards */
   }
 
-  .carousel-wrapper > * {
-    flex: 0 0 auto;
-    margin-right: 5px;
+  /* Quebra de linha para título e cronômetro */
+  .promo-title {
+    text-align: left; /* Centraliza o título */
+    margin-bottom: 1rem; /* Espaço entre título e cronômetro */
   }
 
   .promo-timer {
-    flex-direction: column;
-    align-items: center;
-    font-size: 14px;
+    flex-direction: row; /* Alinha o cronômetro em coluna */
   }
 }
 
 @media (max-width: 576px) {
-  .carousel-wrapper {
-    font-size: 12px;
-  }
-
-  .carousel-wrapper > * {
-    flex: 0 0 auto;
-    margin-right: 3px;
-  }
-
-  .promo-timer {
-    font-size: 12px;
+  .card-promo {
+    min-width: 70px; /* Largura mínima dos cards */
   }
 }
 </style>
