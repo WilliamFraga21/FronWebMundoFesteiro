@@ -6,6 +6,7 @@ import Events from "@/store/modules/Events.js";
 import Professions from "@/store/modules/Professions.js";
 import Categorias from "@/store/modules/Categorias.js";
 import produtosPromo from './modules/produtosPromo';
+import carrinho from './modules/Carrinho.js';
 
 export default new Vuex.Store({
   modules: {
@@ -15,6 +16,7 @@ export default new Vuex.Store({
     Professions,
     Categorias,
     produtosPromo,
+    carrinho,
 
   },
   plugins: [createPersistedState()],
