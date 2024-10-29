@@ -3,12 +3,14 @@ import axios from "axios";
 
 const state = {
     produtosCarrinho: [],
+    produtos: [],
     QTDItens: null,
 };
 
 const getters = {
     getProdutosCarrinho: (state) => state.produtosCarrinho,
     getQTDItensCarrinho: (state) => state.QTDItens,
+    getProdutosFav: (state) => state.produtos,
 };
 
 const actions = {
@@ -55,6 +57,19 @@ const actions = {
         commit("setQTDCarrinho", { itens: await request.data.Itens });
     },
 
+    async getProdutosFavortios({ commit },token) {
+        const request = await axios.get("/api/favoritosme"
+            ,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`  // Adiciona o token aqui
+                }
+            });
+
+        commit("setprodutosFavoritos", { produtos: await request.data.Favoritos });
+    },
+
 
 
 
@@ -68,6 +83,9 @@ const mutations = {
     },
     setQTDCarrinho(state, itens) {
         state.QTDItens = itens;
+    },
+    setprodutosFavoritos(state, produtos) {
+        state.produtos = produtos.produtos;
     },
 };
 

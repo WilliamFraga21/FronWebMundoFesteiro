@@ -98,7 +98,7 @@ export default {
             </datalist>
           </div>
 
-          <span class="d-flex justify-content-center align-items-center"  @click="token('')">
+          <span class="d-flex justify-content-center align-items-center"  @click="token('ProdutosFav')">
             <img src="../assets/imagens/Wishlist.svg" alt="Wishlist Icon" class="img-fluid" style="height: 24px;">
           </span>
 
