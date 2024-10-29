@@ -9,19 +9,27 @@ export default {
     }
   },
 
+  data(){
+    return{
+      QTDItens: null,
+    }
+  },
+
   async mounted() {
     await this.validtoken()
   },
 
   methods:{
 
-    ...mapActions(["ifToken"]),
-    ...mapGetters(["StateToken"]),
+    ...mapActions(["ifToken","getQuantidadeItensCarrinho"]),
+    ...mapGetters(["StateToken","getQTDItensCarrinho"]),
 
     async validtoken() {
       try {
 
-        return await this.ifToken(this.store.getters.StateToken);
+        await this.ifToken(this.store.getters.StateToken);
+        await this.getQuantidadeItensCarrinho(this.store.getters.StateToken);
+        this.QTDItens = store.getters.getQTDItensCarrinho;
       } catch (error) {
         this.$router.push(`/login`);
         console.log(error)
@@ -34,12 +42,12 @@ export default {
 
     token(rota){
       if(this.store.getters.StateToken !== null){
-        console.log("trueeeee")
+
         this.$router.push(`/${rota}`).then(() => {
           window.location.reload();
         });
       }else{
-        console.log("falseeeeee")
+
         this.$router.push('/login').then(() => {
           window.location.reload();
         });
@@ -90,7 +98,6 @@ export default {
             </datalist>
           </div>
 
-
           <span class="d-flex justify-content-center align-items-center"  @click="token('')">
             <img src="../assets/imagens/Wishlist.svg" alt="Wishlist Icon" class="img-fluid" style="height: 24px;">
           </span>
@@ -100,7 +107,7 @@ export default {
 
 
           <button class="btn d-flex justify-content-center align-items-center ms-3 position-relative" @click="token('carrinho')">
-            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill text-bg-secondary">+99 <span class="visually-hidden">unread messages</span></span>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill text-bg-secondary" v-if="QTDItens !== null">{{QTDItens.itens}}<span class="visually-hidden">unread messages</span></span>
             <span class=""><img src="../assets/imagens/Cart1.svg" alt="User Icon" class="img-fluid" style="height: 24px;"></span>
 
           </button>

@@ -3,10 +3,12 @@ import axios from "axios";
 
 const state = {
     produtosCarrinho: [],
+    QTDItens: null,
 };
 
 const getters = {
     getProdutosCarrinho: (state) => state.produtosCarrinho,
+    getQTDItensCarrinho: (state) => state.QTDItens,
 };
 
 const actions = {
@@ -40,12 +42,32 @@ const actions = {
 
 
 
+    async getQuantidadeItensCarrinho({ commit },token) {
+        const request = await axios.get("/api/carrinhoquantidadeitens"
+            ,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`  // Adiciona o token aqui
+                }
+            });
+
+        commit("setQTDCarrinho", { itens: await request.data.Itens });
+    },
+
+
+
+
+
 };
 
 
 const mutations = {
     setProdutosPromocao(state, produtos) {
         state.produtosCarrinho = produtos;
+    },
+    setQTDCarrinho(state, itens) {
+        state.QTDItens = itens;
     },
 };
 
