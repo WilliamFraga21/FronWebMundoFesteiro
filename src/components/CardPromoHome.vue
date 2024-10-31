@@ -34,6 +34,7 @@ export default {
       };
 
 
+
       try {
         // Envia a ação CriarEvento com os dados formatados
         await this.adicionarProductCar(produtoCarrinho);
