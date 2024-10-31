@@ -1,18 +1,51 @@
 <script>
+import {mapActions, mapGetters} from 'vuex';
+import store from "@/store/store";
+
 export default {
   props: {
     produto: {
       type: Array,
       required: true,
     },
+    produtoCarrinho: {
+      type: Object,
+      required: true,
+    },
+
+  },
+  computed: {
+    store() {
+      return store;
+    }
   },
   methods: {
-    adicionarAoCarrinho() {
-      alert('Item adicionado ao carrinho!');
-      // Aqui você pode adicionar a lógica para adicionar ao carrinho
-    }
-  }
-}
+    ...mapActions(["adicionarProductCar"]),
+    ...mapGetters(["StateToken"]),
+    
+    async addToCarrinho() {
+      // const produtoCarrinho[this.produto];
+
+      const produtoCarrinho = {
+      Valor_Uni: this.produto.Valor,
+      Quantidade: 1,
+      produtosvariasoes_id: this.produto.idVariacao,
+      token: store.getters.StateToken,
+      };
+
+
+      try {
+        // Envia a ação CriarEvento com os dados formatados
+        await this.adicionarProductCar(produtoCarrinho);
+
+        // Aqui você pode adicionar qualquer ação a ser realizada após o sucesso, como redirecionar ou limpar os campos
+      } catch (error) {
+        this.errorMessage = "Erro ao criar o Carrinho. Por favor, tente novamente.";
+        this.erroIf = true;
+      }
+    },
+  },
+};
 </script>
 
 <template>
@@ -24,7 +57,7 @@ export default {
           <!-- Verifique se o caminho da imagem está correto -->
           <img src="@/assets/imagens/image3.svg" class="card-img-top " alt="Imagem do Card" style="height: 200px">
           <!-- Barra de Adicionar ao Carrinho -->
-          <button @click="adicionarAoCarrinho" class="add-to-cart-btn position-absolute bottom-0 start-0 w-100  align-items-center justify-content-center">
+          <button @click="addToCarrinho" class="add-to-cart-btn position-absolute bottom-0 start-0 w-100  align-items-center justify-content-center">
             Adicionar ao Carrinho
           </button>
         </div>

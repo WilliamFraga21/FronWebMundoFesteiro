@@ -1,97 +1,104 @@
-// produtosPromo.js
 import axios from "axios";
+import store from "@/store/store";
 
 const state = {
-    produtosCarrinho: [],
-    produtos: [],
-    QTDItens: null,
+  produtosCarrinho: [],
+  produtos: [],
+  QTDItens: null,
 };
 
 const getters = {
-    getProdutosCarrinho: (state) => state.produtosCarrinho,
-    getQTDItensCarrinho: (state) => state.QTDItens,
-    getProdutosFav: (state) => state.produtos,
+  getProdutosCarrinho: (state) => state.produtosCarrinho,
+  getQTDItensCarrinho: (state) => state.QTDItens,
+  getProdutosFav: (state) => state.produtos,
 };
 
 const actions = {
-    async addItemCarrinho({ commit }, userForm2) {
-        const user = {
-            Valor_Uni: userForm2.data.nameEvent,
-            Quantidade: userForm2.data.tipoEvento,
-            produtosvariasoes_id: userForm2.data.quantidadeConvidados,
+  async adicionarProductCar({ commit }, data) {
+    console.log(data)
+    console.log( store.getters.StateToken)
+    try {
+      // console.log(token);
 
-        };
 
-        try {
-            // Envia uma solicitação POST para a API com os dados do usuário para criar uma nova conta, incluindo o token Bearer
-            await axios.post(
-                `/api/carrinho`,
-                JSON.stringify(user),
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${userForm2.token}`  // Adiciona o token aqui
-                    }
-                }
-            );
-        } catch (error) {
-            // Exibe erro no console e lança uma mensagem de erro específica para o registro
-            console.error("Erro no registro:", error);
-            throw new Error("Erro ao criar conta.");
+        const dataCar = {
+
+
+          Valor_Uni: data.Valor_Uni,
+          Quantidade: data.Quantidade,
+          produtosvariasoes_id: data.produtosvariasoes_id,
         }
-    },
 
 
 
 
-    async getQuantidadeItensCarrinho({ commit },token) {
-        const request = await axios.get("/api/carrinhoquantidadeitens"
-            ,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`  // Adiciona o token aqui
-                }
-            });
+      console.log("token teste");
+      const response = await axios.post(
+        "/api/carrinho",
+        dataCar,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${data.token}`
+          }
+        }
+      );
+    } catch (error) {
+      console.error("Erro ao adicionar ao carrinho:", error);
+      throw new Error("Erro ao adicionar ao carrinho.");
+    }
+  },
 
-        commit("setQTDCarrinho", { itens: await request.data.Itens });
-    },
+  async getQuantidadeItensCarrinho({ commit }) {
+    try {
+      const token = store.getters.StateToken;
 
-    async getProdutosFavortios({ commit },token) {
-        const request = await axios.get("/api/favoritosme"
-            ,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`  // Adiciona o token aqui
-                }
-            });
+      const response = await axios.get("/api/carrinhoquantidadeitens", {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
 
-        commit("setprodutosFavoritos", { produtos: await request.data.Favoritos });
-    },
+      commit("setQTDCarrinho", response.data.Itens);
+    } catch (error) {
+      console.error("Erro ao obter a quantidade de itens no carrinho:", error);
+    }
+  },
 
+  async getProdutosFavortios({ commit }) {
+    try {
+      const token = store.getters.StateToken;
 
+      const response = await axios.get("/api/favoritosme", {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
 
-
-
+      commit("setprodutosFavoritos", response.data.Favoritos);
+    } catch (error) {
+      console.error("Erro ao obter produtos favoritos:", error);
+    }
+  },
 };
 
-
 const mutations = {
-    setProdutosPromocao(state, produtos) {
-        state.produtosCarrinho = produtos;
-    },
-    setQTDCarrinho(state, itens) {
-        state.QTDItens = itens;
-    },
-    setprodutosFavoritos(state, produtos) {
-        state.produtos = produtos.produtos;
-    },
+  setProdutosPromocao(state, produtos) {
+    state.produtosCarrinho = produtos;
+  },
+  setQTDCarrinho(state, itens) {
+    state.QTDItens = itens;
+  },
+  setprodutosFavoritos(state, produtos) {
+    state.produtos = produtos;
+  },
 };
 
 export default {
-    state,
-    getters,
-    actions,
-    mutations,
+  state,
+  getters,
+  actions,
+  mutations,
 };
