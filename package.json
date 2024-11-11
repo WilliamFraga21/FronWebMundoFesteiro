@@ -16,6 +16,7 @@
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
     "bootstrap-vue-3": "^0.3.12",
+    "face-api.js": "^0.22.2",
     "vue": "^3.4.29",
     "vue-multiselect": "^3.1.0",
     "vue-router": "^4.3.3",
