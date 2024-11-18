@@ -8,7 +8,7 @@ const getters = {
 };
 const actions = {
     async getProfessions({ commit }) {
-        const request = await axios.get("http://localhost:8000/profissao/getALL2"
+        const request = await axios.get("/profissao/getALL2"
         );
 
         commit("setProfessions", { profession: await request.data.professions });

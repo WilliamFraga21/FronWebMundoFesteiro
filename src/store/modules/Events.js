@@ -75,7 +75,7 @@ const actions = {
         try {
             // Envia uma solicitação POST para a API com os dados do usuário para criar uma nova conta, incluindo o token Bearer
             await axios.post(
-            `http://localhost:8000/api/evento/update/${userForm2.id}`,
+            `/api/evento/update/${userForm2.id}`,
                 JSON.stringify(user),
                 {
                     headers: {
@@ -95,7 +95,7 @@ const actions = {
 
     async getEventosMe({ commit }, token) {
         try {
-            const request = await axios.get("http://localhost:8000/api/evento/me", {
+            const request = await axios.get("/api/evento/me", {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`  // Adiciona o token aqui
@@ -150,7 +150,7 @@ const actions = {
 
         console.log(data)
 
-        const request = await axios.post(`http://localhost:8000/api/evento/create/photo/${data.id}`
+        const request = await axios.post(`/api/evento/create/photo/${data.id}`
             ,
 
 
