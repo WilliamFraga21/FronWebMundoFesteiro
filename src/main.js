@@ -7,7 +7,7 @@ import router from './router';
 import store from './store/store.js'; // Importe a modules do Vuex
 import "bootstrap/dist/css/bootstrap.min.css";
 
-axios.defaults.baseURL = "http://http://145.223.95.36:8080";
+axios.defaults.baseURL = "http://145.223.95.36:8080";
 
 const app = createApp(App);
 
