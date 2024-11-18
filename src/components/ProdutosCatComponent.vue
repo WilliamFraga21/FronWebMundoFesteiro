@@ -46,7 +46,7 @@ export default {
     </div>
 
     <div class="carousel-container" ref="carouselContainer ">
-      <div class="carousel-wrapper d-flex">
+      <div class="carousel-wrapper d-flex flex-wrap">
         <CardPromoHome v-for="(item, index) in produtos" :key="index" :produto="item"/>
       </div>
     </div>

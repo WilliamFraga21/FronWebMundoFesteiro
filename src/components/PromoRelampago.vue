@@ -80,7 +80,7 @@ export default {
       hours: "00",
       minutes: "00",
       seconds: "00",
-      idPromo: 6,
+      idPromo: 1,
       endTime: null,
       currentIndex: 0,
     };
