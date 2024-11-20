@@ -28,7 +28,7 @@ const actions = {
 
     try {
       // Envia os dados do usuário para criar a conta
-      await axios.post("http://localhost:8000/api/user/create", user, {
+      await axios.post("/api/user/create", user, {
         headers: {
           'Content-Type': 'application/json',
         }
@@ -49,7 +49,7 @@ const actions = {
     };
 
     try {
-      const request = await axios.post("http://localhost:8000/auth/login", user);
+      const request = await axios.post("/auth/login", user);
 
       if (request.data.token) {
         commit("setUser", { token: request.data.token });

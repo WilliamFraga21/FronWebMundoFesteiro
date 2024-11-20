@@ -15,7 +15,7 @@ import MyEvents from "@/components/MyEvents.vue";
 import ProdutosCat from "@/views/ProdutosCatView.vue";
 import ProdutosFav from "@/views/ProdutosFavoritosView.vue";
 import Facial from "@/views/facial/facial.vue";
-import Reconhecer from "@/views/facial/reconhecer.vue";
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -94,11 +94,7 @@ const router = createRouter({
       name: 'facial',
       component: Facial
     },
-    {
-      path: '/reconhecer',
-      name: 'reconhecer',
-      component: Reconhecer
-    },
+
 
   ]
 })
