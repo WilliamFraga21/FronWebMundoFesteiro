@@ -10,7 +10,7 @@ export default {
   computed: {
     store() {
       return store
-    }
+    },
   },
   async mounted() {
     await this.getprodcarrinho()
@@ -21,7 +21,7 @@ export default {
 
     async getprodcarrinho() {
       try {
-        // console.log(this.store.getters.getProdutosCarrinho);
+        // console.log(this.store.getters.getProdutosCarrinho)
         return await this.getProdutosCarrinho(this.store.getters.StateToken);
       } catch (error) {
         console.log(error)
@@ -57,8 +57,8 @@ export default {
 
     <div class="container-fluid" style="width: 90%; margin-top: 40px">
       <ProdutoCarrinho
-        v-for="(item, index) in store.getters.getProdutosCarrinho"
-        :key="index"
+        v-for="(item, index) in store.getters.getProdutosCarrinho.produtos"
+        :key="index['produtos']"
         :data="item"
       />
     </div>
@@ -92,7 +92,7 @@ export default {
 
           <div class="border-bottom pb-2 d-flex justify-content-between mt-2">
             <p class="m-0">Frete:</p>
-            <p class="m-0">Trátis</p>
+            <p class="m-0">Grátis</p>
           </div>
 
           <div class="border-bottom pb-2 d-flex justify-content-between mt-2">

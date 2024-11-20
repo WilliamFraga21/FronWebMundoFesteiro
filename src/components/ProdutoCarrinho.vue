@@ -3,7 +3,7 @@
 export default {
   data() {
     return {
-      count: 0, // Valor inicial do contador
+      count: 1, // Valor inicial do contador
     };
   },
 
@@ -49,7 +49,7 @@ export default {
     </div>
     <div>
       <p class="m-0 me-2">
-      {{data.Valor}}
+      {{count * data.Valor}}
       </p>
     </div>
   </div>
