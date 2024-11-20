@@ -1,12 +1,16 @@
 <script >
 
-
 export default {
   data() {
     return {
       count: 0, // Valor inicial do contador
     };
   },
+
+  props: {
+    data: Object,
+  },
+
   methods: {
     increase() {
       this.count++;
@@ -25,15 +29,15 @@ export default {
     <div class="d-flex align-items-center img-item">
       <button type="button" class="btn-close dellItem " aria-label="Close"></button>
       <div>
-        <img src="../assets/imagens/image%203.svg" alt="" style="height: 54px;width: 54px" class="ms-2 ">
+        <img src="../assets/imagens/image3.svg" alt="" style="height: 54px;width: 54px" class="ms-2 ">
       </div>
       <p class="m-0 ms-2">
-        Brigadeiro
+        {{data.Nome_Produto}}
       </p>
     </div>
     <div>
       <p class="m-0">
-        R$1,20
+        {{data.Valor_Uni}}
       </p>
     </div>
     <div class="counter-container">
@@ -45,7 +49,7 @@ export default {
     </div>
     <div>
       <p class="m-0 me-2">
-        R$5,00
+      {{data.Valor}}
       </p>
     </div>
   </div>

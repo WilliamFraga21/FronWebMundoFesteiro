@@ -14,38 +14,25 @@ const getters = {
 };
 
 const actions = {
-  async adicionarProductCar({ commit }, data) {
-    console.log(data)
-    console.log( store.getters.StateToken)
+  async adicionarProductCar(_, data) {
     try {
-      // console.log(token);
+      const dataCar = {
+        Valor_Uni: data.Valor_Uni,
+        Quantidade: data.Quantidade,
+        produtosvariasoes_id: data.produtosvariasoes_id,
+      };
 
+      const token = store.getters.StateToken;
 
-        const dataCar = {
-
-
-          Valor_Uni: data.Valor_Uni,
-          Quantidade: data.Quantidade,
-          produtosvariasoes_id: data.produtosvariasoes_id,
-        }
-
-
-
-
-      console.log("token teste");
-      const response = await axios.post(
-        "/api/carrinho",
-        dataCar,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${data.token}`
-          }
-        }
-      );
+      await axios.post("/api/carrinho", dataCar, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+      });
     } catch (error) {
-      console.error("Erro ao adicionar ao carrinho:", error);
-      throw new Error("Erro ao adicionar ao carrinho.");
+      console.error("Erro ao adicionar ao carrinho:", error.response?.data || error.message);
+      throw new Error(error.response?.data?.message || "Erro ao adicionar ao carrinho.");
     }
   },
 
@@ -56,8 +43,8 @@ const actions = {
       const response = await axios.get("/api/carrinhoquantidadeitens", {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        }
+          'Authorization': `Bearer ${token}`,
+        },
       });
 
       commit("setQTDCarrinho", response.data.Itens);
@@ -73,8 +60,8 @@ const actions = {
       const response = await axios.get("/api/favoritosme", {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        }
+          'Authorization': `Bearer ${token}`,
+        },
       });
 
       commit("setprodutosFavoritos", response.data.Favoritos);
@@ -82,10 +69,29 @@ const actions = {
       console.error("Erro ao obter produtos favoritos:", error);
     }
   },
+
+  async getProdutosCarrinho({ commit }) {
+    try {
+      const token = store.getters.StateToken;
+
+      const response = await axios.get("/api/carrinhome", {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      console.log("Produtos Carrinho:", response.data.Carrinho);
+
+      commit("setProdutosCarrinho", response.data.Carrinho || []);
+    } catch (error) {
+      console.error("Erro ao obter produtos do carrinho:", error.response?.data || error.message);
+    }
+  },
 };
 
 const mutations = {
-  setProdutosPromocao(state, produtos) {
+  setProdutosCarrinho(state, produtos) {
     state.produtosCarrinho = produtos;
   },
   setQTDCarrinho(state, itens) {
